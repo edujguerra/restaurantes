@@ -3,19 +3,19 @@ package br.com.fiap.restaurantes.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="tb_pessoas")
-public class Pessoa {
+@Table(name="tb_Clientes")
+public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
 
-    private String cpf;
-
     private String email;
 
-    public Pessoa(){
+    private Integer telefone;
+
+    public Cliente(){
 
     }
 
@@ -27,10 +27,9 @@ public class Pessoa {
         this.email = email;
     }
 
-    public Pessoa(Long id, String nome, String cpf, String email) {
+    public Cliente(Long id, String nome , String email) {
         this.id = id;
         this.nome = nome;
-        this.cpf = cpf;
         this.email = email;
     }
 
@@ -46,25 +45,27 @@ public class Pessoa {
         return nome;
     }
 
-    public String getCpf() {
-        return cpf;
+    public Integer getTelefone() {
+        return telefone;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setTelefone(Integer telefone) {
+        this.telefone = telefone;
     }
+
+
 
     @Override
     public String toString() {
-        return "Pessoa{" +
+        return "Cliente{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
                 ", email='" + email + '\'' +
+                ", telefone='" + telefone + '\'' +
                 '}';
     }
 }

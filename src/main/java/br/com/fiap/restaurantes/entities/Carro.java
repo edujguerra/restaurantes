@@ -13,17 +13,17 @@ public class Carro {
     private String placa1111;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_Pessoa", nullable = false)
-    private Pessoa pessoa;
+    @JoinColumn(name = "id_Cliente", nullable = false)
+    private Cliente cliente;
 
     public Carro(){
 
     }
 
-    public Carro(Long id, String placa, Pessoa pessoa) {
+    public Carro(Long id, String placa, Cliente cliente) {
         this.id = id;
         this.placa = placa;
-        this.pessoa = pessoa;
+        this.cliente = cliente;
     }
 
     public Long getId() {
@@ -49,11 +49,11 @@ public class Carro {
     public void setPlaca(String placa) {
         this.placa = placa;
     }
-    public Pessoa getPessoa() {
-        return pessoa;
+    public Cliente getCliente() {
+        return cliente;
     }
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
 }

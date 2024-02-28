@@ -1,9 +1,8 @@
 package br.com.fiap.restaurantes.dto;
 
-public record PessoaDTO(
+public record ClienteDTO(
         Long id,
         String nome,
-        String cpf,
         String email
 ) {
 

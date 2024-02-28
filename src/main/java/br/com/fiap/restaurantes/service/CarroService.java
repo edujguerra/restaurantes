@@ -42,7 +42,7 @@ public class CarroService {
         try {
             Carro buscaCarro = repo.getReferenceById(id);
             buscaCarro.setPlaca(carroDTO.placa());
-            buscaCarro.setPessoa(carroDTO.pessoa());
+            buscaCarro.setCliente(carroDTO.cliente());
             buscaCarro = repo.save(buscaCarro);
 
             return toCarroDTO(buscaCarro);
@@ -59,7 +59,7 @@ public class CarroService {
         return new CarroDTO(
                 carro.getId(),
                 carro.getPlaca(),
-                carro.getPessoa()
+                carro.getCliente()
         );
     }
 
@@ -67,7 +67,7 @@ public class CarroService {
         return new Carro(
                 carroDTO.id(),
                 carroDTO.placa(),
-                carroDTO.pessoa()
+                carroDTO.cliente()
         );
     }
 }
