@@ -7,48 +7,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.restaurantes.ControllerNotFoundException;
-import br.com.fiap.restaurantes.dto.PessoaDTO;
-import br.com.fiap.restaurantes.entities.Pessoa;
-import br.com.fiap.restaurantes.repository.PessoaRepository;
+import br.com.fiap.restaurantes.dto.TipoCozinhaDTO;
+import br.com.fiap.restaurantes.entities.TipoCozinha;
+import br.com.fiap.restaurantes.repository.TipoCozinhaRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class PessoaService {
+public class TipoCozinhaService {
     @Autowired
-    private PessoaRepository repo;
+    private TipoCozinhaRepository repo;
 
-    public Collection<PessoaDTO> findAll() {
-        var pessoas = repo.findAll();
-        return pessoas
+    public Collection<TipoCozinhaDTO> findAll() {
+        var tipos = repo.findAll();
+        return tipos
                 .stream()
-                .map(this::toPessoaDTO)        //Transforma cada pessoa em PessoaDTO
-                .collect(Collectors.toList());  //Devolve a Lista
+                .map(this::toTipoCozinhaDTO)        
+                .collect(Collectors.toList());  
     }
 
-    public PessoaDTO findById(Long id) {
-        var pessoa =
+    public TipoCozinhaDTO findById(Long id) {
+        var tipos =
                 repo.findById(id).orElseThrow(
-                        () -> new ControllerNotFoundException("Pessoa não Encontrada !!!!")                );
-        return toPessoaDTO(pessoa);
+                        () -> new ControllerNotFoundException("Tipo de cozinha não encontrada !!!!")                );
+        return toTipoCozinhaDTO(tipos);
     }
 
-    public PessoaDTO save(PessoaDTO pessoaDTO) {
-        Pessoa pessoa = toPessoa(pessoaDTO);
-        pessoa = repo.save(pessoa);
-        return toPessoaDTO(pessoa);
+    public TipoCozinhaDTO save(TipoCozinhaDTO tipoDTO) {
+        TipoCozinha tipo = toTipoCozinha(tipoDTO);
+        tipo = repo.save(tipo);
+        return toTipoCozinhaDTO(tipo);
     }
 
-    public PessoaDTO update(Long id, PessoaDTO pessoaDTO) {
+    public TipoCozinhaDTO update(Long id, TipoCozinhaDTO tipoDTO) {
         try {
-            Pessoa buscaPessoa = repo.getReferenceById(id);
-            buscaPessoa.setNome(pessoaDTO.nome());
-            buscaPessoa.setCpf(pessoaDTO.cpf());
-            buscaPessoa.setEmail(pessoaDTO.email());
-            buscaPessoa = repo.save(buscaPessoa);
+            TipoCozinha buscaTipo = repo.getReferenceById(id);
+            buscaTipo.setNome(tipoDTO.nome());
 
-            return toPessoaDTO(buscaPessoa);
+            return toTipoCozinhaDTO(buscaTipo);
         } catch (EntityNotFoundException e) {
-            throw new ControllerNotFoundException("Pessoa não Encontrada !!!!!!!!");
+            throw new ControllerNotFoundException("Tipo de cozinha não Encontrado !!!!!!!!");
         }
     }
 
@@ -56,21 +53,17 @@ public class PessoaService {
         repo.deleteById(id);
     }
 
-    private PessoaDTO toPessoaDTO(Pessoa pessoa) {
-        return new PessoaDTO(
-                pessoa.getId(),
-                pessoa.getNome(),
-                pessoa.getCpf(),
-                pessoa.getEmail()
+    private TipoCozinhaDTO toTipoCozinhaDTO(TipoCozinha tipo) {
+        return new TipoCozinhaDTO(
+                tipo.getId(),
+                tipo.getNome()
         );
     }
 
-    private Pessoa toPessoa(PessoaDTO pessoaDTO) {
-        return new Pessoa(
-                pessoaDTO.id(),
-                pessoaDTO.nome(),
-                pessoaDTO.cpf(),
-                pessoaDTO.email()
+    private TipoCozinha toTipoCozinha(TipoCozinhaDTO tipoDTO) {
+        return new TipoCozinha(
+                tipoDTO.id(),
+                tipoDTO.nome()                
         );
     }
 }

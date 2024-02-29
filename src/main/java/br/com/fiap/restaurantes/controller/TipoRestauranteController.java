@@ -14,50 +14,50 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fiap.restaurantes.dto.PessoaDTO;
-import br.com.fiap.restaurantes.service.PessoaService;
+import br.com.fiap.restaurantes.dto.TipoCozinhaDTO;
+import br.com.fiap.restaurantes.service.TipoCozinhaService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("/pessoas")
-public class PessoaController {
+@RequestMapping("/tipocozinha")
+public class TipoRestauranteController {
     @Autowired
-    private PessoaService service;
+    private TipoCozinhaService service;
 
     @GetMapping
-    @Operation(summary = "Listar todos as pessoas", description = "Lista todas pessoas cadastradas neste parquimetro.")
-    public ResponseEntity<Collection<PessoaDTO>> findAll(){
-        var pessoas = service.findAll();
-        return ResponseEntity.ok(pessoas);
+    @Operation(summary = "Listar todos os tipos", description = "Lista todos tipos cadastrados.")
+    public ResponseEntity<Collection<TipoCozinhaDTO>> findAll(){
+        var tipoCozinhas = service.findAll();
+        return ResponseEntity.ok(tipoCozinhas);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Obter os dados de um motorista por ID", description = "Obtem os dados de um motorista com base no ID fornecido.")
-    public ResponseEntity<PessoaDTO> findById(@PathVariable Long id) {
-        var pessoa = service.findById(id);
-        return ResponseEntity.ok(pessoa);
+    @Operation(summary = "Obter os tipos por ID", description = "Obtem os tipos com base no ID fornecido.")
+    public ResponseEntity<TipoCozinhaDTO> findById(@PathVariable Long id) {
+        var tipo = service.findById(id);
+        return ResponseEntity.ok(tipo);
     }
 
     @PostMapping
-    @Operation(summary = "Registra um motorista", description = "Registra um motorista, conforme exemplo abaixo.")
-    public ResponseEntity<PessoaDTO> save(@RequestBody PessoaDTO pessoaDTO){
-        pessoaDTO = service.save(pessoaDTO);
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(pessoaDTO);
+    @Operation(summary = "Registra um tipo", description = "Registra um tipo, conforme exemplo abaixo.")
+    public ResponseEntity<TipoCozinhaDTO> save(@RequestBody TipoCozinhaDTO tipoDTO){
+        tipoDTO = service.save(tipoDTO);
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(tipoDTO);
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar motorista por ID", description = "Atualiza dados de um motorista com base no seu id, conforme exemplo abaixo.")
-    public ResponseEntity<PessoaDTO> update(
+    @Operation(summary = "Atualizar tipo por ID", description = "Atualiza dados de um tipo com base no seu id, conforme exemplo abaixo.")
+    public ResponseEntity<TipoCozinhaDTO> update(
             @PathVariable Long id,
-            @RequestBody PessoaDTO pessoaDTO) {
+            @RequestBody TipoCozinhaDTO tipoDTO) {
 
-        pessoaDTO = service.update(id,pessoaDTO);
+        tipoDTO = service.update(id,tipoDTO);
 
-        return ResponseEntity.ok(pessoaDTO);
+        return ResponseEntity.ok(tipoDTO);
     }
 
     @DeleteMapping("{id}")
-    @Operation(summary = "Apagar dados de um motorista por ID", description = "Apaga o registro de um motorista com base no seu ID, desregistrando-o do sistema.")
+    @Operation(summary = "Apagar dados de um tipo por ID", description = "Apaga o registro de um tipo com base no seu ID, desregistrando-o do sistema.")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();

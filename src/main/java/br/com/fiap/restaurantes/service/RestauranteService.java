@@ -7,47 +7,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.restaurantes.ControllerNotFoundException;
-import br.com.fiap.restaurantes.dto.CarroDTO;
-import br.com.fiap.restaurantes.entities.Carro;
-import br.com.fiap.restaurantes.repository.CarroRepository;
+import br.com.fiap.restaurantes.dto.RestauranteDTO;
+import br.com.fiap.restaurantes.entities.Endereco;
+import br.com.fiap.restaurantes.entities.Restaurante;
+import br.com.fiap.restaurantes.entities.TipoCozinha;
+import br.com.fiap.restaurantes.repository.RestauranteRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class CarroService {
+public class RestauranteService {
     @Autowired
-    private CarroRepository repo;
+    private RestauranteRepository repo;
 
-    public Collection<CarroDTO> findAll() {
-        var carros = repo.findAll();
-        return carros
+    public Collection<RestauranteDTO> findAll() {
+        var restaurantes = repo.findAll();
+        return restaurantes
                 .stream()
-                .map(this::toCarroDTO)        //Transforma cada carro em CarroDTO
-                .collect(Collectors.toList());  //Devolve a Lista
+                .map(this::toRestauranteDTO)        
+                .collect(Collectors.toList()); 
     }
 
-    public CarroDTO findById(Long id) {
+    public RestauranteDTO findById(Long id) {
         var carro =
                 repo.findById(id).orElseThrow(
-                        () -> new ControllerNotFoundException("Carro não Encontrada !!!!")                );
-        return toCarroDTO(carro);
+                        () -> new ControllerNotFoundException("Restaurante não Encontrada !!!!")                );
+        return toRestauranteDTO(carro);
     }
 
-    public CarroDTO save(CarroDTO carroDTO) {
-        Carro carro = toCarro(carroDTO);
-        carro = repo.save(carro);
-        return toCarroDTO(carro);
+    public RestauranteDTO save(RestauranteDTO restauranteDTO) {
+    	Restaurante restaurante = toRestaurante(restauranteDTO);
+    	restaurante = repo.save(restaurante);
+        return toRestauranteDTO(restaurante);
     }
 
-    public CarroDTO update(Long id, CarroDTO carroDTO) {
+    public RestauranteDTO update(Long id, RestauranteDTO restauranteDTO) {
         try {
-            Carro buscaCarro = repo.getReferenceById(id);
-            buscaCarro.setPlaca(carroDTO.placa());
-            buscaCarro.setPessoa(carroDTO.pessoa());
-            buscaCarro = repo.save(buscaCarro);
+        	Restaurante buscaRestaurante = repo.getReferenceById(id);
+            buscaRestaurante.setEndereço(restauranteDTO.endereço());
+            buscaRestaurante.setHoraFinal(restauranteDTO.horaFinal());
+            buscaRestaurante.setHoraInicio(restauranteDTO.horaInicio());
+            buscaRestaurante.setNome(restauranteDTO.nome());
+            buscaRestaurante.setTipoCozinha(restauranteDTO.tipoCozinha());
+            buscaRestaurante = repo.save(buscaRestaurante);
 
-            return toCarroDTO(buscaCarro);
+            return toRestauranteDTO(buscaRestaurante);
         } catch (EntityNotFoundException e) {
-            throw new ControllerNotFoundException("Carro não Encontrado !!!!!!!!");
+            throw new ControllerNotFoundException("Restaurante não Encontrado !!!!!!!!");
         }
     }
 
@@ -55,19 +60,26 @@ public class CarroService {
         repo.deleteById(id);
     }
 
-    private CarroDTO toCarroDTO(Carro carro) {
-        return new CarroDTO(
-                carro.getId(),
-                carro.getPlaca(),
-                carro.getPessoa()
+    private RestauranteDTO toRestauranteDTO(Restaurante restaurante) {
+        return new RestauranteDTO(
+        		restaurante.getId(),
+        		restaurante.getNome(),
+        		restaurante.getEndereço(),
+        		restaurante.getTipoCozinha(),
+        		restaurante.getHoraInicio(),
+        		restaurante.getHoraFinal()
+
         );
     }
 
-    private Carro toCarro(CarroDTO carroDTO) {
-        return new Carro(
-                carroDTO.id(),
-                carroDTO.placa(),
-                carroDTO.pessoa()
+    private Restaurante toRestaurante(RestauranteDTO restauranteDTO) {
+        return new Restaurante(
+        		restauranteDTO.id(),
+        		restauranteDTO.nome(),
+        		restauranteDTO.endereço(),
+        		restauranteDTO.tipoCozinha(),
+        		restauranteDTO.horaInicio(),
+        		restauranteDTO.horaFinal()        		
         );
     }
 }
