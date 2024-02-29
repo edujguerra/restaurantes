@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.fiap.restaurantes.ControllerNotFoundException;
 import br.com.fiap.restaurantes.dto.RestauranteDTO;
-import br.com.fiap.restaurantes.entities.Endereco;
 import br.com.fiap.restaurantes.entities.Restaurante;
-import br.com.fiap.restaurantes.entities.TipoCozinha;
 import br.com.fiap.restaurantes.repository.RestauranteRepository;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -43,7 +41,7 @@ public class RestauranteService {
     public RestauranteDTO update(Long id, RestauranteDTO restauranteDTO) {
         try {
         	Restaurante buscaRestaurante = repo.getReferenceById(id);
-            buscaRestaurante.setEndereço(restauranteDTO.endereço());
+            buscaRestaurante.setEndereco(restauranteDTO.endereco());
             buscaRestaurante.setHoraFinal(restauranteDTO.horaFinal());
             buscaRestaurante.setHoraInicio(restauranteDTO.horaInicio());
             buscaRestaurante.setNome(restauranteDTO.nome());
@@ -64,7 +62,7 @@ public class RestauranteService {
         return new RestauranteDTO(
         		restaurante.getId(),
         		restaurante.getNome(),
-        		restaurante.getEndereço(),
+        		restaurante.getEndereco(),
         		restaurante.getTipoCozinha(),
         		restaurante.getHoraInicio(),
         		restaurante.getHoraFinal()
@@ -76,7 +74,7 @@ public class RestauranteService {
         return new Restaurante(
         		restauranteDTO.id(),
         		restauranteDTO.nome(),
-        		restauranteDTO.endereço(),
+        		restauranteDTO.endereco(),
         		restauranteDTO.tipoCozinha(),
         		restauranteDTO.horaInicio(),
         		restauranteDTO.horaFinal()        		

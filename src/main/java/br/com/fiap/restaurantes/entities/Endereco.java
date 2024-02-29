@@ -1,15 +1,6 @@
 package br.com.fiap.restaurantes.entities;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name="tb_endereco")
 public class Endereco {
-
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String rua;
     
     private String bairro;
@@ -21,14 +12,6 @@ public class Endereco {
     private String cep;
     
     private String cidade;
-
-	public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
     
     public String getRua() {
 		return rua;
@@ -78,15 +61,16 @@ public class Endereco {
 		this.cidade = cidade;
 	}
 
-	public Endereco(Long id, String rua, String bairro, String numero, String complemento, String cep, String cidade) {
-		this.id = id;
+	public Endereco(String rua, String bairro, String numero, String complemento, String cep, String cidade) {
 		this.rua = rua;
 		this.bairro = bairro;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.cep = cep;
 		this.cidade = cidade;
+	}
+
+	public Endereco() {
+
 	} 
-	
-	
 }

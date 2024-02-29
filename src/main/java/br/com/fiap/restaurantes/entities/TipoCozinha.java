@@ -31,7 +31,9 @@ public class TipoCozinha {
 	public TipoCozinha(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
+	}
+
+	public TipoCozinha() {
+		
 	}    
-	
-	
 }

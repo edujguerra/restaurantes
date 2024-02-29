@@ -12,9 +12,8 @@ public class Restaurante {
 
     private String nome;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_Endereco", nullable = false)
-    private Endereco endereço;
+    //private Endereco endereco;
+    private String endereco;
     
 	@ManyToOne(optional = false)
     @JoinColumn(name = "id_TipoCozinha", nullable = false)
@@ -39,12 +38,12 @@ public class Restaurante {
 		this.nome = nome;
 	}
 	
-    public Endereco getEndereço() {
-		return endereço;
+    public String getEndereco() {
+		return endereco;
 	}
 
-	public void setEndereço(Endereco endereço) {
-		this.endereço = endereço;
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 
 	public TipoCozinha getTipoCozinha() {
@@ -71,14 +70,18 @@ public class Restaurante {
 		this.horaFinal = horaFinal;
 	}
 
-	public Restaurante(Long id, String nome, Endereco endereço, TipoCozinha tipoCozinha, String horaInicio,
+	public Restaurante(Long id, String nome, String endereco, TipoCozinha tipoCozinha, String horaInicio,
 			String horaFinal) {
 		this.id = id;
 		this.nome = nome;
-		this.endereço = endereço;
+		this.endereco = endereco;
 		this.tipoCozinha = tipoCozinha;
 		this.horaInicio = horaInicio;
 		this.horaFinal = horaFinal;
+	}
+
+	public Restaurante() {
+		
 	}
 	
 	
