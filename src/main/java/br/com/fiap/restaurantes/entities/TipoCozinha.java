@@ -8,8 +8,10 @@ public class TipoCozinha {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_tipoCozinha", nullable = false)
     private Long id;
 
+	@Column(name = "ds_tipo", nullable = false)
     private String nome;
 
 	public Long getId() {
