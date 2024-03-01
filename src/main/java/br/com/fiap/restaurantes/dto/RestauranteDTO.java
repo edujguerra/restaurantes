@@ -8,5 +8,6 @@ public record RestauranteDTO(
         String endereco,
         TipoCozinha tipoCozinha,
     	String horaInicio,
-    	String horaFinal
+    	String horaFinal,
+    	int numMesas
 ) {}

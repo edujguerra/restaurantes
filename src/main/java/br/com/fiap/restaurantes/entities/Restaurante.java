@@ -28,6 +28,9 @@ public class Restaurante {
 	@Column(name = "hr_final", nullable = false, length = 5)
 	private String horaFinal;
 	
+	@Column(name = "nr_mesas", nullable = false)
+	private int numMesas;	
+	
 	public Long getId() {
         return id;
     }
@@ -76,14 +79,23 @@ public class Restaurante {
 		this.horaFinal = horaFinal;
 	}
 
+	public int getNumMesas() {
+		return numMesas;
+	}
+
+	public void setNumMesas(int numMesas) {
+		this.numMesas = numMesas;
+	}
+
 	public Restaurante(Long id, String nome, String endereco, TipoCozinha tipoCozinha, String horaInicio,
-			String horaFinal) {
+			String horaFinal, int numMesas) {
 		this.id = id;
 		this.nome = nome;
 		this.endereco = endereco;
 		this.tipoCozinha = tipoCozinha;
 		this.horaInicio = horaInicio;
 		this.horaFinal = horaFinal;
+		this.numMesas = numMesas;
 	}
 
 	public Restaurante() {

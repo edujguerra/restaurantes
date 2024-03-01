@@ -45,7 +45,7 @@ public class RestauranteService {
             buscaRestaurante.setHoraFinal(restauranteDTO.horaFinal());
             buscaRestaurante.setHoraInicio(restauranteDTO.horaInicio());
             buscaRestaurante.setNome(restauranteDTO.nome());
-            buscaRestaurante.setTipoCozinha(restauranteDTO.tipoCozinha());
+            buscaRestaurante.setNumMesas(restauranteDTO.numMesas());
             buscaRestaurante = repo.save(buscaRestaurante);
 
             return toRestauranteDTO(buscaRestaurante);
@@ -65,8 +65,8 @@ public class RestauranteService {
         		restaurante.getEndereco(),
         		restaurante.getTipoCozinha(),
         		restaurante.getHoraInicio(),
-        		restaurante.getHoraFinal()
-
+        		restaurante.getHoraFinal(),
+        		restaurante.getNumMesas()
         );
     }
 
@@ -77,7 +77,8 @@ public class RestauranteService {
         		restauranteDTO.endereco(),
         		restauranteDTO.tipoCozinha(),
         		restauranteDTO.horaInicio(),
-        		restauranteDTO.horaFinal()        		
+        		restauranteDTO.horaFinal(),
+        		restauranteDTO.numMesas()
         );
     }
 }
