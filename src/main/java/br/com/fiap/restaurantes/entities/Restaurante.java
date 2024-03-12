@@ -2,42 +2,49 @@ package br.com.fiap.restaurantes.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-@Table(name="tb_restaurante")
+@Table(name = "tb_restaurante")
 public class Restaurante {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_restaurante", nullable = false)
-    private Long id;
+	private Long id;
 
 	@Column(name = "nm_restaurante", nullable = false)
-    private String nome;
-    
-    //private Endereco endereco;
+	private String nome;
+
+	// private Endereco endereco;
 	@Column(name = "ds_enderec", nullable = false)
-    private String endereco;
-    
+	private String endereco;
+
 	@ManyToOne(optional = false)
-    @JoinColumn(name = "id_tipoCozinha", nullable = false)
-    private TipoCozinha tipoCozinha;
-	
+	@JoinColumn(name = "id_tipoCozinha", nullable = false)
+	private TipoCozinha tipoCozinha;
+
 	@Column(name = "hr_inicio", nullable = false, length = 5)
 	private String horaInicio;
-	
+
 	@Column(name = "hr_final", nullable = false, length = 5)
 	private String horaFinal;
-	
-	@Column(name = "nr_mesas", nullable = false)
-	private int numMesas;	
-	
-	public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@OneToMany
+	private List<Reserva> reservas;
+
+	@Column(name = "nr_mesas", nullable = false)
+	private int numMesas;
+
+	private int mesasDisponiveis;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;
@@ -46,8 +53,8 @@ public class Restaurante {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-    public String getEndereco() {
+
+	public String getEndereco() {
 		return endereco;
 	}
 
@@ -79,6 +86,14 @@ public class Restaurante {
 		this.horaFinal = horaFinal;
 	}
 
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+
 	public int getNumMesas() {
 		return numMesas;
 	}
@@ -87,20 +102,29 @@ public class Restaurante {
 		this.numMesas = numMesas;
 	}
 
+	public int getMesasDisponiveis() {
+		return mesasDisponiveis;
+	}
+
+	public void setMesasDisponiveis(int mesasDisponiveis) {
+		this.mesasDisponiveis = mesasDisponiveis;
+	}
+
 	public Restaurante(Long id, String nome, String endereco, TipoCozinha tipoCozinha, String horaInicio,
-			String horaFinal, int numMesas) {
+					   String horaFinal, List<Reserva> reservas, int numMesas, int mesasDisponiveis) {
 		this.id = id;
 		this.nome = nome;
 		this.endereco = endereco;
 		this.tipoCozinha = tipoCozinha;
 		this.horaInicio = horaInicio;
 		this.horaFinal = horaFinal;
+		this.reservas = reservas;
 		this.numMesas = numMesas;
+		this.mesasDisponiveis = mesasDisponiveis;
 	}
 
 	public Restaurante() {
-		
+
 	}
-	
-	
+
 }

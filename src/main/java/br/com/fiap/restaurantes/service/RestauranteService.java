@@ -34,6 +34,7 @@ public class RestauranteService {
 
     public RestauranteDTO save(RestauranteDTO restauranteDTO) {
     	Restaurante restaurante = toRestaurante(restauranteDTO);
+        restaurante.setMesasDisponiveis(restauranteDTO.numMesas()); //Setando valor inicial de mesas disponiveis
     	restaurante = repo.save(restaurante);
         return toRestauranteDTO(restaurante);
     }
@@ -42,10 +43,12 @@ public class RestauranteService {
         try {
         	Restaurante buscaRestaurante = repo.getReferenceById(id);
             buscaRestaurante.setEndereco(restauranteDTO.endereco());
-            buscaRestaurante.setHoraFinal(restauranteDTO.horaFinal());
-            buscaRestaurante.setHoraInicio(restauranteDTO.horaInicio());
+            buscaRestaurante.setReservas(restauranteDTO.reservas());
             buscaRestaurante.setNome(restauranteDTO.nome());
             buscaRestaurante.setNumMesas(restauranteDTO.numMesas());
+            buscaRestaurante.setMesasDisponiveis(restauranteDTO.numMesas()); //Atualizando valor inicial de mesas disponiveis
+            buscaRestaurante.setHoraInicio(restauranteDTO.horaInicio());
+            buscaRestaurante.setHoraFinal(restauranteDTO.horaFinal());
             buscaRestaurante = repo.save(buscaRestaurante);
 
             return toRestauranteDTO(buscaRestaurante);
@@ -58,15 +61,23 @@ public class RestauranteService {
         repo.deleteById(id);
     }
 
+    public void atualizaMesasDisponiveis(RestauranteDTO restauranteDTO, int numeroPessoas) {
+        Restaurante restaurante = repo.getReferenceById(restauranteDTO.id());
+        restaurante.setMesasDisponiveis(restaurante.getMesasDisponiveis() - (numeroPessoas/4));
+        repo.save(restaurante);
+    }
+
     private RestauranteDTO toRestauranteDTO(Restaurante restaurante) {
         return new RestauranteDTO(
         		restaurante.getId(),
         		restaurante.getNome(),
         		restaurante.getEndereco(),
         		restaurante.getTipoCozinha(),
-        		restaurante.getHoraInicio(),
-        		restaurante.getHoraFinal(),
-        		restaurante.getNumMesas()
+                restaurante.getHoraInicio(),
+                restaurante.getHoraFinal(),
+        		restaurante.getReservas(),
+        		restaurante.getNumMesas(),
+                restaurante.getMesasDisponiveis()
         );
     }
 
@@ -76,9 +87,11 @@ public class RestauranteService {
         		restauranteDTO.nome(),
         		restauranteDTO.endereco(),
         		restauranteDTO.tipoCozinha(),
-        		restauranteDTO.horaInicio(),
-        		restauranteDTO.horaFinal(),
-        		restauranteDTO.numMesas()
+                restauranteDTO.horaInicio(),
+                restauranteDTO.horaFinal(),
+        		restauranteDTO.reservas(),
+        		restauranteDTO.numMesas(),
+                restauranteDTO.mesasDisponiveis()
         );
     }
 }
