@@ -12,7 +12,6 @@ public record RestauranteDTO(
         TipoCozinha tipoCozinha,
 		String horaInicio,
 		String horaFinal,
-    	List<Reserva> reservas,
     	int numMesas,
 		int mesasDisponiveis
 ) {}

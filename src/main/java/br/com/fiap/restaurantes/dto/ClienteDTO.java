@@ -8,6 +8,5 @@ public record ClienteDTO(
         Long id,
         String nome,
         String email,
-        Long telefone,
-        List<Reserva> reservas
+        Long telefone
 ) {}

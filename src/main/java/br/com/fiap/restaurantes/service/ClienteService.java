@@ -45,7 +45,6 @@ public class ClienteService {
             buscaCliente.setNome(clienteDTO.nome());
             buscaCliente.setEmail(clienteDTO.email());
             buscaCliente.setTelefone(clienteDTO.telefone());
-            buscaCliente.setReservas(clienteDTO.reservas());
             buscaCliente = clienteRepository.save(buscaCliente);
 
             return toClienteDTO(buscaCliente);
@@ -63,8 +62,7 @@ public class ClienteService {
                 cliente.getId(),
                 cliente.getNome(),
                 cliente.getEmail(),
-                cliente.getTelefone(),
-                cliente.getReservas()
+                cliente.getTelefone()
         );
     }
 
@@ -73,8 +71,7 @@ public class ClienteService {
                 clienteDTO.id(),
                 clienteDTO.nome(),
                 clienteDTO.email(),
-                clienteDTO.telefone(),
-                clienteDTO.reservas()
+                clienteDTO.telefone()
         );
     }
 }

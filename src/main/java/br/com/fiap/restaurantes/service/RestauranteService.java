@@ -26,10 +26,10 @@ public class RestauranteService {
     }
 
     public RestauranteDTO findById(Long id) {
-        var carro =
+        var restaurante =
                 repo.findById(id).orElseThrow(
                         () -> new ControllerNotFoundException("Restaurante não Encontrada !!!!")                );
-        return toRestauranteDTO(carro);
+        return toRestauranteDTO(restaurante);
     }
 
     public RestauranteDTO save(RestauranteDTO restauranteDTO) {
@@ -43,7 +43,6 @@ public class RestauranteService {
         try {
         	Restaurante buscaRestaurante = repo.getReferenceById(id);
             buscaRestaurante.setEndereco(restauranteDTO.endereco());
-            buscaRestaurante.setReservas(restauranteDTO.reservas());
             buscaRestaurante.setNome(restauranteDTO.nome());
             buscaRestaurante.setNumMesas(restauranteDTO.numMesas());
             buscaRestaurante.setMesasDisponiveis(restauranteDTO.numMesas()); //Atualizando valor inicial de mesas disponiveis
@@ -75,7 +74,6 @@ public class RestauranteService {
         		restaurante.getTipoCozinha(),
                 restaurante.getHoraInicio(),
                 restaurante.getHoraFinal(),
-        		restaurante.getReservas(),
         		restaurante.getNumMesas(),
                 restaurante.getMesasDisponiveis()
         );
@@ -89,7 +87,6 @@ public class RestauranteService {
         		restauranteDTO.tipoCozinha(),
                 restauranteDTO.horaInicio(),
                 restauranteDTO.horaFinal(),
-        		restauranteDTO.reservas(),
         		restauranteDTO.numMesas(),
                 restauranteDTO.mesasDisponiveis()
         );

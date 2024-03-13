@@ -14,21 +14,9 @@ public class SwaggerConfig {
     public List<GroupedOpenApi> apis() {
         return Arrays.asList(
                 GroupedOpenApi.builder()
-                .group("motorista-api**")
-                .pathsToMatch("/pessoas/**")
-                .build(),
-                GroupedOpenApi.builder()
-                        .group("veiculos-api**")
-                        .pathsToMatch("/carros/**")
-                        .build(),
-                GroupedOpenApi.builder()
-                        .group("cartao-api**")
-                        .pathsToMatch("/cartoes/**")
-                        .build(),
-                GroupedOpenApi.builder()
-                        .group("estacionamento-api**")
-                        .pathsToMatch("/estacionamentos/**")
-                        .build()
+                .group("reserva-api**")
+                .pathsToMatch("/reservas/**")
+                .build()
         );
     }
 

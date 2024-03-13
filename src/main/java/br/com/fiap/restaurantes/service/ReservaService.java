@@ -21,6 +21,7 @@ public class ReservaService {
     @Autowired
     private ReservaRepository reservaRepository;
 
+    @Autowired
     private RestauranteService restauranteService;
 
     public Collection<ReservaDTO> findAll() {
@@ -43,8 +44,8 @@ public class ReservaService {
         Reserva reserva = toReserva(reservaDTO);
         RestauranteDTO restauranteDaReserva = restauranteService.findById(reservaDTO.restaurante().getId());
         String horarioEntrada = reservaDTO.horaInicio();
-        if (Integer.valueOf(reserva.getRestaurante().getHoraInicio()) < Integer.valueOf(reservaDTO.horaInicio())
-                || Integer.valueOf(reserva.getRestaurante().getHoraFinal()) > Integer.valueOf(reservaDTO.horaFinal()) + 2) {
+        if (Integer.valueOf(reserva.getHoraInicio()) < Integer.valueOf(restauranteDaReserva.horaInicio())
+                || Integer.valueOf(reserva.getHoraFinal()) > Integer.valueOf(restauranteDaReserva.horaFinal()) + 2) {
             throw new ControllerNotFoundException("Horario da reserva incompativel com restaurante!!!");
         }
         if (restauranteDaReserva.mesasDisponiveis() < reserva.getNumeroPessoas()/4) {

@@ -30,9 +30,6 @@ public class Restaurante {
 	@Column(name = "hr_final", nullable = false, length = 5)
 	private String horaFinal;
 
-	@OneToMany
-	private List<Reserva> reservas;
-
 	@Column(name = "nr_mesas", nullable = false)
 	private int numMesas;
 
@@ -86,14 +83,6 @@ public class Restaurante {
 		this.horaFinal = horaFinal;
 	}
 
-	public List<Reserva> getReservas() {
-		return reservas;
-	}
-
-	public void setReservas(List<Reserva> reservas) {
-		this.reservas = reservas;
-	}
-
 	public int getNumMesas() {
 		return numMesas;
 	}
@@ -111,14 +100,13 @@ public class Restaurante {
 	}
 
 	public Restaurante(Long id, String nome, String endereco, TipoCozinha tipoCozinha, String horaInicio,
-					   String horaFinal, List<Reserva> reservas, int numMesas, int mesasDisponiveis) {
+					   String horaFinal, int numMesas, int mesasDisponiveis) {
 		this.id = id;
 		this.nome = nome;
 		this.endereco = endereco;
 		this.tipoCozinha = tipoCozinha;
 		this.horaInicio = horaInicio;
 		this.horaFinal = horaFinal;
-		this.reservas = reservas;
 		this.numMesas = numMesas;
 		this.mesasDisponiveis = mesasDisponiveis;
 	}

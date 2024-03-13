@@ -22,17 +22,13 @@ public class Cliente {
    @Column(nullable = false, length = 5)
    private Long telefone;
 
-   @OneToMany
-   private List<Reserva> reservas;
-
    public Cliente(){}
 
-   public Cliente(Long id, String nome, String email, Long telefone, List<Reserva> reservas) {
+   public Cliente(Long id, String nome, String email, Long telefone) {
       this.id = id;
       this.nome = nome;
       this.email = email;
       this.telefone = telefone;
-      this.reservas = reservas;
    }
 
    public Long getId() {
@@ -67,11 +63,4 @@ public class Cliente {
       this.telefone = telefone;
    }
 
-   public List<Reserva> getReservas() {
-      return reservas;
-   }
-
-   public void setReservas(List<Reserva> reservas) {
-      this.reservas = reservas;
-   }
 }
