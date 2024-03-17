@@ -1,5 +1,6 @@
 package br.com.fiap.restaurantes.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.*;
@@ -19,7 +20,7 @@ public class Reserva {
    private Restaurante restaurante;
 
    @Column(name = "data_reserva", nullable = false)
-   private Date dataReserva;
+   private LocalDate dataReserva;
 
    @Column(name = "numero_pessoas", nullable = false)
    private int numeroPessoas;
@@ -32,7 +33,7 @@ public class Reserva {
 
    public Reserva() {}
 
-   public Reserva(Long id, Cliente cliente, Restaurante restaurante, Date dataReserva, int numeroPessoas,
+   public Reserva(Long id, Cliente cliente, Restaurante restaurante, LocalDate dataReserva, int numeroPessoas,
                   String horaInicio, String horaFinal) {
       this.id = id;
       this.cliente = cliente;
@@ -67,11 +68,11 @@ public class Reserva {
       this.restaurante = restaurante;
    }
 
-   public Date getDataReserva() {
+   public LocalDate getDataReserva() {
       return dataReserva;
    }
 
-   public void setDataReserva(Date dataReserva) {
+   public void setDataReserva(LocalDate dataReserva) {
       this.dataReserva = dataReserva;
    }
 

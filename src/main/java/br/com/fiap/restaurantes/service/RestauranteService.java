@@ -1,8 +1,11 @@
 package br.com.fiap.restaurantes.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
+import br.com.fiap.restaurantes.dto.ReservaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,10 +63,24 @@ public class RestauranteService {
         repo.deleteById(id);
     }
 
-    public void atualizaMesasDisponiveis(RestauranteDTO restauranteDTO, int numeroPessoas) {
+    public void atualizaMesasDisponiveis(RestauranteDTO restauranteDTO, ReservaDTO reservaDTO) {
         Restaurante restaurante = repo.getReferenceById(restauranteDTO.id());
-        restaurante.setMesasDisponiveis(restaurante.getMesasDisponiveis() - (numeroPessoas/4));
+        if (isMesaDisponivelNoHorario(restaurante.getId(), reservaDTO.dataReserva(), reservaDTO.horaInicio(), restaurante.getNumMesas())){
+            restaurante.setMesasDisponiveis(restaurante.getMesasDisponiveis() - (reservaDTO.numeroPessoas() / 4));
+        } else {
+            throw new ControllerNotFoundException("Nao ha mesas disponiveis para este restaurante na data: " +
+                    reservaDTO.dataReserva() + " horario: " + reservaDTO.horaInicio());
+        }
         repo.save(restaurante);
+    }
+
+    private boolean isMesaDisponivelNoHorario(Long idRestaurante, LocalDate dataReserva, String horaReserva, int totalDeMesas) {
+        int mesasOcupadas = repo.mesasOcupadasNoHorario(idRestaurante, dataReserva, Integer.valueOf(horaReserva));
+       if (mesasOcupadas < totalDeMesas) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private RestauranteDTO toRestauranteDTO(Restaurante restaurante) {

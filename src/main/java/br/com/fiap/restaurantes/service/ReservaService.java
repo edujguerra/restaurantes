@@ -51,7 +51,7 @@ public class ReservaService {
         if (restauranteDaReserva.mesasDisponiveis() < reserva.getNumeroPessoas()/4) {
             throw new ControllerNotFoundException("Nao ha mesas disponiveis para este restaurante na data de: " + reservaDTO.dataReserva());
         } else {
-            restauranteService.atualizaMesasDisponiveis(restauranteDaReserva, reserva.getNumeroPessoas());
+            restauranteService.atualizaMesasDisponiveis(restauranteDaReserva, reservaDTO);
         }
 
         reserva = reservaRepository.save(reserva);
