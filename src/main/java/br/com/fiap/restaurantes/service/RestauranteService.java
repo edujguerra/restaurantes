@@ -75,7 +75,7 @@ public class RestauranteService {
     }
 
     private boolean isMesaDisponivelNoHorario(Long idRestaurante, LocalDate dataReserva, String horaReserva, int totalDeMesas) {
-        int mesasOcupadas = repo.mesasOcupadasNoHorario(idRestaurante, dataReserva, Integer.valueOf(horaReserva));
+        int mesasOcupadas = repo.mesasOcupadasNoHorario(idRestaurante, dataReserva, horaReserva);
        if (mesasOcupadas < totalDeMesas) {
             return true;
         } else {
