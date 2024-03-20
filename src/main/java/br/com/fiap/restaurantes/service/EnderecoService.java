@@ -1,45 +1,13 @@
 package br.com.fiap.restaurantes.service;
 
-import org.springframework.stereotype.Service;
-
 import br.com.fiap.restaurantes.dto.EnderecoDTO;
 import br.com.fiap.restaurantes.entities.Endereco;
 
-@Service
-public class EnderecoService {
+public interface EnderecoService {
 
-    public EnderecoDTO update(Long id, EnderecoDTO enderecoDTO) {
-        Endereco buscaEndereco = new Endereco();
-        buscaEndereco.setRua(enderecoDTO.rua());
-        buscaEndereco.setBairro(enderecoDTO.bairro());
-        buscaEndereco.setNumero(enderecoDTO.numero());
-        buscaEndereco.setComplemento(enderecoDTO.complemento());
-        buscaEndereco.setCep(enderecoDTO.cep());
-        buscaEndereco.setCidade(enderecoDTO.cidade());                
+    public EnderecoDTO update(Long id, EnderecoDTO enderecoDTO);
 
-        return toEnderecoDTO(buscaEndereco);
-    }
+    public EnderecoDTO toEnderecoDTO(Endereco endereco);
 
-    private EnderecoDTO toEnderecoDTO(Endereco endereco) {
-        return new EnderecoDTO(
-                endereco.getRua(),
-                endereco.getBairro(),
-                endereco.getNumero(),
-                endereco.getComplemento(),
-                endereco.getCep(),
-                endereco.getCidade()                
-                
-        );
-    }
-
-    private Endereco toEndereco(EnderecoDTO enderecoDTO) {
-        return new Endereco(
-        		enderecoDTO.rua(),
-        		enderecoDTO.bairro(),
-        		enderecoDTO.numero(),
-        		enderecoDTO.complemento(),
-        		enderecoDTO.cep(),
-        		enderecoDTO.cidade()                                
-        );
-    }
+    public Endereco toEndereco(EnderecoDTO enderecoDTO);
 }
