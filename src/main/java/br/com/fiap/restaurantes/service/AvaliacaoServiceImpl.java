@@ -11,12 +11,12 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class AvaliacaoServiceImpl {
+public class AvaliacaoServiceImpl implements AvaliacaoService {
 
     private final AvaliacaoRepository avaliacaoRepository;
-    public Avaliacao criarAvaliacao(Avaliacao mensagem) {
-        mensagem.setId(new Random().nextLong());
-        return avaliacaoRepository.save(mensagem);
+    public Avaliacao criarAvaliacao(Avaliacao avaliacao) {
+        avaliacao.setId(new Random().nextLong());
+        return avaliacaoRepository.save(avaliacao);
     }
 
     public Avaliacao buscarAvaliacao(Long id) {

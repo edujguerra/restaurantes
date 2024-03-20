@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 public interface AvaliacaoService {
     Avaliacao criarAvaliacao(Avaliacao avaliacao);
     Avaliacao buscarAvaliacao(Long id);
+    boolean apagarAvaliacao(Long id);
     Avaliacao alterarAvaliacao(Long id, Avaliacao avaliacaoNova);
     Page<Avaliacao> listarAvaliacoes(Pageable pageable);
 }
