@@ -106,13 +106,6 @@
 			</exclusions>
 		</dependency>
 
-		<!-- database -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
 		<!-- relatorio de testes -->
 		<dependency>
 			<groupId>io.qameta.allure</groupId>
@@ -172,6 +165,11 @@
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 			<version>2.3.32</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

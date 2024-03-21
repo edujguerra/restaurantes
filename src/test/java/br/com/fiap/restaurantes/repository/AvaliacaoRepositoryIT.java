@@ -10,9 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-@AutoConfigureTestDatabase
 @Transactional
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class AvaliacaoRepositoryIT {
 
     @Autowired
