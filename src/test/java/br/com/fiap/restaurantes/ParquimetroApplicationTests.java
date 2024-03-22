@@ -1,4 +1,4 @@
-package br.com.fiap.parquimetro;
+package br.com.fiap.restaurantes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

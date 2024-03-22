@@ -1,20 +1,29 @@
 package br.com.fiap.restaurantes.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Table(name = "tb_cliente")
-public class Cliente extends Pessoa {
+public class Cliente{
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id_cliente", nullable = false)
    private Long id;
 
-   public Cliente(Long id, String nome, String email, Long telefone) {
-      super(nome,email,telefone);
-      this.id = id;
-   }
+   @Column(nullable = false)
+   private String nome;
+
+   @Column(nullable = false)
+   private String email;
+
+   @Column(nullable = false, length = 5)
+   private Long telefone;
+
 }
