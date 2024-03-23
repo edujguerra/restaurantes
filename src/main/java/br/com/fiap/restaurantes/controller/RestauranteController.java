@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.restaurantes.dto.RestauranteDTO;
-import br.com.fiap.restaurantes.service.RestauranteService;
+import br.com.fiap.restaurantes.service.RestauranteServiceImpl;
 
 @RestController
 @RequestMapping("/restaurante")
 public class RestauranteController {
     @Autowired
-    private RestauranteService service;
+    private RestauranteServiceImpl service;
 
     @GetMapping
     public ResponseEntity<Collection<RestauranteDTO>> findAll(){

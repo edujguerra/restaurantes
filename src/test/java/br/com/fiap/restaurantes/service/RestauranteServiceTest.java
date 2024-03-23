@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 public class RestauranteServiceTest {
 
-    private RestauranteService restauranteService;
+    private RestauranteServiceImpl restauranteService;
 
     @Mock
     private RestauranteRepository restauranteRepository;
@@ -30,8 +30,7 @@ public class RestauranteServiceTest {
     @BeforeEach
     void setUp() {
         openMocks = MockitoAnnotations.openMocks(this);
-//        restauranteService = new RestauranteService();
-        restauranteService = new RestauranteService(restauranteRepository);
+        restauranteService = new RestauranteServiceImpl(restauranteRepository);
     }
 
     @AfterEach

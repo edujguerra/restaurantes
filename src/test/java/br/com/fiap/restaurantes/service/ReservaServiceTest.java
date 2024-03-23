@@ -25,7 +25,7 @@ import java.util.Random;
 
 public class ReservaServiceTest {
 
-    private ReservaService reservaService;
+    private ReservaServiceImpl reservaService;
 
     @Mock
     private ReservaRepository reservaRepository;
@@ -34,14 +34,14 @@ public class ReservaServiceTest {
     private RestauranteRepository restauranteRepository;
 
     @Mock
-    RestauranteService restauranteService;
+    RestauranteServiceImpl restauranteService;
 
     AutoCloseable openMocks;
 
     @BeforeEach
     void setUp() {
         openMocks = MockitoAnnotations.openMocks(this);
-        reservaService = new ReservaService(reservaRepository, restauranteService);
+        reservaService = new ReservaServiceImpl(reservaRepository, restauranteService);
     }
 
     @AfterEach
