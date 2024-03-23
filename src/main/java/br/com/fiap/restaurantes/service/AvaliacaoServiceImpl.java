@@ -15,7 +15,7 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
 
     private final AvaliacaoRepository avaliacaoRepository;
     public Avaliacao criarAvaliacao(Avaliacao avaliacao) {
-        avaliacao.setId(new Random().nextLong());
+        avaliacao.setId(new Random().nextLong(1000));
         return avaliacaoRepository.save(avaliacao);
     }
 

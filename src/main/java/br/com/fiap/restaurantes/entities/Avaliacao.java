@@ -27,12 +27,10 @@ public class Avaliacao {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_cliente", nullable = false)
-    @NotEmpty(message = "Cliente não pode estar vazio.")
     private Cliente cliente;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_restaurante", nullable = false)
-    @NotEmpty(message = "Restaurante não pode estar vazio.")
     private Restaurante restaurante;
 
     @Builder.Default

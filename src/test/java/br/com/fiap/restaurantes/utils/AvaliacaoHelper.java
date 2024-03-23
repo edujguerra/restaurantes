@@ -35,11 +35,11 @@ public abstract class AvaliacaoHelper {
     }
 
     public static Avaliacao gerarAvaliacao() {
-        TipoCozinha tipoCozinha = new TipoCozinha(1L, "Teste");
+        TipoCozinha tipoCozinha = new TipoCozinha(1L, "LANCHES");
         Cliente cliente = new Cliente(1L, "Teste", "email",1234L );
-        Restaurante restaurante = new Restaurante(1L, "nome teste",
-                "endereço",  tipoCozinha, "01:00", "06:00",
-                10,10);
+        Restaurante restaurante = new Restaurante(1L, "RESTAURANTE UM",
+                "AVENIDA UM",  tipoCozinha, "22:00", "06:00",
+                30,20);
         var timestamp = LocalDateTime.now();
 
         return Avaliacao.builder()
@@ -59,7 +59,7 @@ public abstract class AvaliacaoHelper {
                 10,10);
 
         return Avaliacao.builder()
-                .id(new Random().nextLong())
+                .id(new Random().nextLong(10000))
                 .cliente(cliente)
                 .restaurante(restaurante)
                 .dataAvaliacao(LocalDateTime.now())
@@ -70,7 +70,7 @@ public abstract class AvaliacaoHelper {
 
     public static Avaliacao registrarAvaliacao(AvaliacaoRepository repository) {
         var avaliacao = gerarAvaliacao();
-        avaliacao.setId(new Random().nextLong());
+        avaliacao.setId(new Random().nextLong(10000));
         return repository.save(avaliacao);
     }
 }

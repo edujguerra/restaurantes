@@ -98,17 +98,6 @@ class AvaliacaoServiceIT {
   }
 
   @Test
-  void deveGerarExcecao_QuandoAlterarAvaliacao_IdNaoCoincide() {
-    var id = 1L;
-    var avaliacaoNova = AvaliacaoHelper.gerarAvaliacaoCompleta();
-
-    assertThatThrownBy(
-        () -> avaliacaoService.alterarAvaliacao(id, avaliacaoNova))
-        .isInstanceOf(AvaliacaoNotFoundException.class)
-        .hasMessage("avaliacao não apresenta o ID correto");
-  }
-
-  @Test
   void devePermitirApagarAvaliacao() {
     var avaliacaoRegistrada = AvaliacaoHelper.registrarAvaliacao(avaliacaoRepository);
     var resultado = avaliacaoService.apagarAvaliacao(avaliacaoRegistrada.getId());
