@@ -25,7 +25,7 @@ public class ReservaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservaDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<Reserva> findById(@PathVariable Long id) {
         var reserva = reservaService.findById(id);
         return ResponseEntity.ok(reserva);
     }

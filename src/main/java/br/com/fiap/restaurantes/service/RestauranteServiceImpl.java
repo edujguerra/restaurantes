@@ -4,21 +4,26 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import br.com.fiap.restaurantes.dto.ReservaDTO;
+import br.com.fiap.restaurantes.exception.AvaliacaoNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.fiap.restaurantes.ControllerNotFoundException;
-import br.com.fiap.restaurantes.dto.ReservaDTO;
 import br.com.fiap.restaurantes.dto.RestauranteDTO;
 import br.com.fiap.restaurantes.entities.Restaurante;
 import br.com.fiap.restaurantes.repository.RestauranteRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class RestauranteServiceImpl implements RestauranteService {
+public class RestauranteServiceImpl implements RestauranteService{
     @Autowired
     private RestauranteRepository repo;
 
+    public RestauranteServiceImpl(RestauranteRepository restauranteRepository) {
+        this.repo = restauranteRepository;
+    }
+
+    @Override
     public Collection<RestauranteDTO> findAll() {
         var restaurantes = repo.findAll();
         return restaurantes
@@ -27,13 +32,15 @@ public class RestauranteServiceImpl implements RestauranteService {
                 .collect(Collectors.toList()); 
     }
 
+    @Override
     public RestauranteDTO findById(Long id) {
         var restaurante =
                 repo.findById(id).orElseThrow(
-                        () -> new ControllerNotFoundException("Restaurante não Encontrada !!!!")                );
+                        () -> new AvaliacaoNotFoundException.ControllerNotFoundException("Restaurante não Encontrada !!!!")                );
         return toRestauranteDTO(restaurante);
     }
 
+    @Override
     public RestauranteDTO save(RestauranteDTO restauranteDTO) {
     	Restaurante restaurante = toRestaurante(restauranteDTO);
         restaurante.setMesasDisponiveis(restauranteDTO.numMesas()); //Setando valor inicial de mesas disponiveis
@@ -41,6 +48,7 @@ public class RestauranteServiceImpl implements RestauranteService {
         return toRestauranteDTO(restaurante);
     }
 
+    @Override
     public RestauranteDTO update(Long id, RestauranteDTO restauranteDTO) {
         try {
         	Restaurante buscaRestaurante = repo.getReferenceById(id);
@@ -54,34 +62,34 @@ public class RestauranteServiceImpl implements RestauranteService {
 
             return toRestauranteDTO(buscaRestaurante);
         } catch (EntityNotFoundException e) {
-            throw new ControllerNotFoundException("Restaurante não Encontrado !!!!!!!!");
+            throw new AvaliacaoNotFoundException.ControllerNotFoundException("Restaurante não Encontrado !!!!!!!!");
         }
     }
 
+    @Override
     public void delete(Long id) {
         repo.deleteById(id);
     }
 
+    @Override
     public void atualizaMesasDisponiveis(RestauranteDTO restauranteDTO, ReservaDTO reservaDTO) {
         Restaurante restaurante = repo.getReferenceById(restauranteDTO.id());
         if (isMesaDisponivelNoHorario(restaurante.getId(), reservaDTO.dataReserva(), reservaDTO.horaInicio(), restaurante.getNumMesas())){
-            restaurante.setMesasDisponiveis(restaurante.getMesasDisponiveis() - (reservaDTO.numeroPessoas() / 4));
+            restaurante.setMesasDisponiveis((int) ((double) restaurante.getMesasDisponiveis() - ((double) reservaDTO.numeroPessoas() / 4)));
         } else {
-            throw new ControllerNotFoundException("Nao ha mesas disponiveis para este restaurante na data: " +
+            throw new AvaliacaoNotFoundException.ControllerNotFoundException("Nao ha mesas disponiveis para este restaurante na data: " +
                     reservaDTO.dataReserva() + " horario: " + reservaDTO.horaInicio());
         }
         repo.save(restaurante);
     }
 
-    public boolean isMesaDisponivelNoHorario(Long idRestaurante, String dataReserva, String horaReserva, int totalDeMesas) {
+    @Override
+    public boolean isMesaDisponivelNoHorario(Long idRestaurante, LocalDate dataReserva, String horaReserva, int totalDeMesas) {
         int mesasOcupadas = repo.mesasOcupadasNoHorario(idRestaurante, dataReserva, horaReserva);
-       if (mesasOcupadas < totalDeMesas) {
-            return true;
-        } else {
-            return false;
-        }
+       return (mesasOcupadas < totalDeMesas);
     }
 
+    @Override
     public RestauranteDTO toRestauranteDTO(Restaurante restaurante) {
         return new RestauranteDTO(
         		restaurante.getId(),
@@ -95,6 +103,7 @@ public class RestauranteServiceImpl implements RestauranteService {
         );
     }
 
+    @Override
     public Restaurante toRestaurante(RestauranteDTO restauranteDTO) {
         return new Restaurante(
         		restauranteDTO.id(),

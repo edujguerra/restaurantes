@@ -1,26 +1,30 @@
 package br.com.fiap.restaurantes.service;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import br.com.fiap.restaurantes.ControllerNotFoundException;
 import br.com.fiap.restaurantes.dto.ReservaDTO;
 import br.com.fiap.restaurantes.dto.RestauranteDTO;
 import br.com.fiap.restaurantes.entities.Reserva;
+import br.com.fiap.restaurantes.exception.AvaliacaoNotFoundException;
 import br.com.fiap.restaurantes.repository.ReservaRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservaServiceImpl implements ReservaService{
-    
+
     @Autowired
     private ReservaRepository reservaRepository;
 
     @Autowired
-    private RestauranteService restauranteService;
+    private RestauranteServiceImpl restauranteService;
+
+    public ReservaServiceImpl(ReservaRepository reservaRepository, RestauranteServiceImpl restauranteService) {
+        this.reservaRepository = reservaRepository;
+        this.restauranteService = restauranteService;
+    }
 
     public Collection<ReservaDTO> findAll() {
         var reservas = reservaRepository.findAll();
@@ -31,11 +35,9 @@ public class ReservaServiceImpl implements ReservaService{
                 .collect(Collectors.toList());
     }
 
-    public ReservaDTO findById(Long id) {
-        var reserva = reservaRepository.findById(id).orElseThrow(
-                () -> new ControllerNotFoundException("Reserva não encontrada!!!"));
-
-        return toReservaDTO(reserva);
+    public Reserva findById(Long id) {
+        return reservaRepository.findById(id).orElseThrow(
+                () -> new AvaliacaoNotFoundException.ControllerNotFoundException("Reserva não encontrada!!!"));
     }
 
     public ReservaDTO save(ReservaDTO reservaDTO) {
@@ -43,11 +45,11 @@ public class ReservaServiceImpl implements ReservaService{
         RestauranteDTO restauranteDaReserva = restauranteService.findById(reservaDTO.restaurante().getId());
         String horarioEntrada = reservaDTO.horaInicio();
         if (Integer.valueOf(reserva.getHoraInicio()) < Integer.valueOf(restauranteDaReserva.horaInicio())
-                || Integer.valueOf(reserva.getHoraFinal()) > Integer.valueOf(restauranteDaReserva.horaFinal()) + 2) {
-            throw new ControllerNotFoundException("Horario da reserva incompativel com restaurante!!!");
+                || Integer.valueOf(reserva.getHoraFinal()) > Integer.valueOf(restauranteDaReserva.horaFinal())) {
+            throw new AvaliacaoNotFoundException.ControllerNotFoundException("Horario da reserva incompativel com restaurante!!!");
         }
-        if (restauranteDaReserva.mesasDisponiveis() < reserva.getNumeroPessoas()/4) {
-            throw new ControllerNotFoundException("Nao ha mesas disponiveis para este restaurante na data de: " + reservaDTO.dataReserva());
+        if (restauranteDaReserva.mesasDisponiveis() < (double) reserva.getNumeroPessoas()/4) {
+            throw new AvaliacaoNotFoundException.ControllerNotFoundException("Nao ha mesas disponiveis para este restaurante na data de: " + reservaDTO.dataReserva());
         } else {
             restauranteService.atualizaMesasDisponiveis(restauranteDaReserva, reservaDTO);
         }
@@ -59,16 +61,20 @@ public class ReservaServiceImpl implements ReservaService{
     public ReservaDTO update(Long id, ReservaDTO reservaDTO) {
         try {
             Reserva reserva = reservaRepository.getReferenceById(id);
+            if (reserva == null || !reservaDTO.id().equals(reserva.getId())) {
+                throw new AvaliacaoNotFoundException.ControllerNotFoundException("Reserva não encontrada!!!");
+            }
             reserva.setCliente(reservaDTO.cliente());
             reserva.setRestaurante(reservaDTO.restaurante());
             reserva.setDataReserva(reservaDTO.dataReserva());
+            reserva.setNumeroPessoas(reservaDTO.numeroPessoas());
             reserva.setHoraInicio(reservaDTO.horaInicio());
             reserva.setHoraFinal(reservaDTO.horaFinal());
             reserva = reservaRepository.save(reserva);
 
             return toReservaDTO(reserva);
         } catch (EntityNotFoundException e) {
-            throw new ControllerNotFoundException("Reserva não encontrada!!!");
+            throw new AvaliacaoNotFoundException.ControllerNotFoundException("Reserva não encontrada!!!");
         }
     }
 
@@ -99,5 +105,6 @@ public class ReservaServiceImpl implements ReservaService{
                 reservaDTO.horaFinal()
         );
     }
+
 
 }
