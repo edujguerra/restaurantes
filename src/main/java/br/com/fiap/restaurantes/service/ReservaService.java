@@ -9,7 +9,7 @@ public interface ReservaService {
 
     public Collection<ReservaDTO> findAll();
 
-    public ReservaDTO findById(Long id);
+    public Reserva findById(Long id);
 
     public ReservaDTO save(ReservaDTO reservaDTO);
 
