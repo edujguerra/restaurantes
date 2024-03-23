@@ -1,0 +1,43 @@
+
+package br.com.fiap.restaurantes.exception;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.time.Instant;
+
+public class AvaliacaoNotFoundException extends RuntimeException {
+
+  public AvaliacaoNotFoundException(String mensagem) {
+    super(mensagem);
+  }
+
+  @ControllerAdvice
+  public static class ControllerExceptionHandler {
+      private StandardError err = new StandardError();
+
+      @ExceptionHandler(ControllerNotFoundException.class)
+      public ResponseEntity<StandardError> entityNotFound(
+              ControllerNotFoundException e,
+              HttpServletRequest request) {
+
+          HttpStatus status = HttpStatus.NOT_FOUND;
+          err.setTimestamp(Instant.now());
+          err.setStatus(status.value());
+          err.setError("Entity not Found !!!!!");
+          err.setMessage(e.getMessage());
+          err.setPath(request.getRequestURI());
+
+          return ResponseEntity.status(status).body(err);
+      }
+  }
+
+  public static class ControllerNotFoundException extends RuntimeException {
+      public ControllerNotFoundException(String message) {
+          super(message);
+      }
+  }
+}

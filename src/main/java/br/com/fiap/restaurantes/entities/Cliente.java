@@ -2,15 +2,19 @@ package br.com.fiap.restaurantes.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.jackson.Jacksonized;
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@Jacksonized
+@Entity
 @Table(name = "tb_cliente")
-public class Cliente{
+public class Cliente {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)

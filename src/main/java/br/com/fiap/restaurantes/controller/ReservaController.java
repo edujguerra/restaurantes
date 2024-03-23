@@ -25,28 +25,24 @@ public class ReservaController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Listar todos os veiculos", description = "Lista todos os veiculos registrados neste parquimetro.")
     public ResponseEntity<ReservaDTO> findById(@PathVariable Long id) {
         var reserva = reservaService.findById(id);
         return ResponseEntity.ok(reserva);
     }
 
     @PostMapping
-    @Operation(summary = "Listar todos os veiculos", description = "Lista todos os veiculos registrados neste parquimetro.")
     public ResponseEntity<ReservaDTO> save(@RequestBody ReservaDTO reservaDTO) {
         reservaDTO = reservaService.save(reservaDTO);
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(reservaDTO);
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Listar todos os veiculos", description = "Lista todos os veiculos registrados neste parquimetro.")
     public ResponseEntity<ReservaDTO> update(@PathVariable Long id, @RequestBody ReservaDTO reservaDTO) {
         reservaDTO = reservaService.update(id, reservaDTO);
         return ResponseEntity.ok(reservaDTO);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Listar todos os veiculos", description = "Lista todos os veiculos registrados neste parquimetro.")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         reservaService.delete(id);
         return ResponseEntity.noContent().build();

@@ -2,13 +2,17 @@ package br.com.fiap.restaurantes.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.jackson.Jacksonized;
 
-@Entity
 @Data
-@AllArgsConstructor
+@Builder(toBuilder = true)
 @NoArgsConstructor
+@AllArgsConstructor
+@Jacksonized
+@Entity
 @Table(name = "tb_restaurante")
 public class Restaurante {
 

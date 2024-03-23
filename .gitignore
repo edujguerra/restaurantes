@@ -39,6 +39,8 @@ build/
 *.jar
 *.sw?
 *~
+*result.json
+*container.json
 .#*
 .*.md.html
 .DS_Store

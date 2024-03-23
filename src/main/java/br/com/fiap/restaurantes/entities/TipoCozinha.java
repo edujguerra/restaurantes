@@ -2,12 +2,17 @@ package br.com.fiap.restaurantes.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+import lombok.extern.jackson.Jacksonized;
+
 @Entity
+@Data
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@Jacksonized
 @Table(name="tb_tipocozinha")
 public class TipoCozinha {
 
@@ -17,5 +22,5 @@ public class TipoCozinha {
     private Long id;
 
 	@Column(name = "ds_tipo", nullable = false)
-    private String nome; 
+    private String nome;
 }
