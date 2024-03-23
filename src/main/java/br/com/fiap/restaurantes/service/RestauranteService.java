@@ -22,7 +22,7 @@ public interface RestauranteService {
 
     public void atualizaMesasDisponiveis(RestauranteDTO restauranteDTO, ReservaDTO reservaDTO);
 
-    public boolean isMesaDisponivelNoHorario(Long idRestaurante, LocalDate dataReserva, String horaReserva, int totalDeMesas);
+    public boolean isMesaDisponivelNoHorario(Long idRestaurante, String dataReserva, String horaReserva, int totalDeMesas);
 
     public RestauranteDTO toRestauranteDTO(Restaurante restaurante);
 

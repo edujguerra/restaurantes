@@ -2,7 +2,7 @@ package br.com.fiap.restaurantes.controller;
 
 import br.com.fiap.restaurantes.dto.ReservaDTO;
 import br.com.fiap.restaurantes.entities.Reserva;
-import br.com.fiap.restaurantes.service.ReservaServiceImpl;
+import br.com.fiap.restaurantes.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.Collection;
 public class ReservaController {
 
     @Autowired
-    private ReservaServiceImpl reservaService;
+    private ReservaService reservaService;
 
     @GetMapping
     public ResponseEntity<Collection<ReservaDTO>> findAll() {

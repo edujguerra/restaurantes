@@ -1,6 +1,5 @@
 package br.com.fiap.restaurantes.service;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -84,7 +83,7 @@ public class RestauranteServiceImpl implements RestauranteService{
     }
 
     @Override
-    public boolean isMesaDisponivelNoHorario(Long idRestaurante, LocalDate dataReserva, String horaReserva, int totalDeMesas) {
+    public boolean isMesaDisponivelNoHorario(Long idRestaurante, String dataReserva, String horaReserva, int totalDeMesas) {
         int mesasOcupadas = repo.mesasOcupadasNoHorario(idRestaurante, dataReserva, horaReserva);
        return (mesasOcupadas < totalDeMesas);
     }
