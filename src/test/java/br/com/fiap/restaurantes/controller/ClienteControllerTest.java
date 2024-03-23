@@ -36,7 +36,7 @@ public class ClienteControllerTest {
     private ClienteService clienteService;
 
     public String criaClienteDTO() throws JsonProcessingException {
-        return objectMapper.writeValueAsString(new ClienteDTO(1L,"Thiago","teste@Teste.com",11994880144L));
+        return objectMapper.writeValueAsString(new ClienteDTO(1L,"CLIENTE UM","EMAIL UM",213213l));
     }    
 
     @Test
@@ -78,7 +78,7 @@ public class ClienteControllerTest {
     }
 
 public Cliente criaCliente(){
-        return new Cliente(1L,"Thiago","teste@Teste.com",11994880144L);
+        return new Cliente(1L,"CLIENTE UM","EMAIL UM",213213l);
     }
 }
     

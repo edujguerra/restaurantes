@@ -34,7 +34,7 @@ public class RestauranteControllerTest {
     private RestauranteService restauranteService;
 
     public String criaRestauranteDTO() throws JsonProcessingException {
-        return objectMapper.writeValueAsString(new RestauranteDTO(1L,"testeRest","teste",new TipoCozinha(1L,"teste"),"11","12",20,10));
+        return objectMapper.writeValueAsString(new RestauranteDTO(1L,"RESTAURANTE UM","AVENIDA UM",new TipoCozinha(1L,"LANCHES"),"22:00","06:00",30,20));
     }    
 
     @Test
@@ -76,7 +76,7 @@ public class RestauranteControllerTest {
     }
 
     public Restaurante criaRestaurante(){
-        Restaurante restaurante = new Restaurante(1L,"testeRest","teste",new TipoCozinha(1L,"teste"),"11","12",20,10);
+        Restaurante restaurante = new Restaurante(1L,"RESTAURANTE UM","AVENIDA UM",new TipoCozinha(1L,"LANCHES"),"22:00","06:00",30,20);
 
         return restaurante;      
     }

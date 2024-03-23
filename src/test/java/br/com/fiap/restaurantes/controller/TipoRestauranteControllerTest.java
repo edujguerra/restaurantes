@@ -70,7 +70,7 @@ public class TipoRestauranteControllerTest {
     }
 
     public TipoCozinhaDTO criaTipoCozinhaDTO(){
-        return new TipoCozinhaDTO(1L,"testeTipo");
+        return new TipoCozinhaDTO(1L,"LANCHES");
     }
     
 }
