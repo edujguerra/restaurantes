@@ -1,6 +1,7 @@
 package br.com.fiap.restaurantes.controller;
 
 import br.com.fiap.restaurantes.dto.ReservaDTO;
+import br.com.fiap.restaurantes.entities.Reserva;
 import br.com.fiap.restaurantes.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -23,7 +24,7 @@ public class ReservaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservaDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<Reserva> findById(@PathVariable Long id) {
         var reserva = reservaService.findById(id);
         return ResponseEntity.ok(reserva);
     }

@@ -21,6 +21,11 @@ public class ReservaService {
     @Autowired
     private RestauranteService restauranteService;
 
+    public ReservaService(ReservaRepository reservaRepository, RestauranteService restauranteService) {
+        this.reservaRepository = reservaRepository;
+        this.restauranteService = restauranteService;
+    }
+
     public Collection<ReservaDTO> findAll() {
         var reservas = reservaRepository.findAll();
 
@@ -30,11 +35,9 @@ public class ReservaService {
                 .collect(Collectors.toList());
     }
 
-    public ReservaDTO findById(Long id) {
-        var reserva = reservaRepository.findById(id).orElseThrow(
+    public Reserva findById(Long id) {
+        return reservaRepository.findById(id).orElseThrow(
                 () -> new AvaliacaoNotFoundException.ControllerNotFoundException("Reserva não encontrada!!!"));
-
-        return toReservaDTO(reserva);
     }
 
     public ReservaDTO save(ReservaDTO reservaDTO) {
@@ -42,10 +45,10 @@ public class ReservaService {
         RestauranteDTO restauranteDaReserva = restauranteService.findById(reservaDTO.restaurante().getId());
         String horarioEntrada = reservaDTO.horaInicio();
         if (Integer.valueOf(reserva.getHoraInicio()) < Integer.valueOf(restauranteDaReserva.horaInicio())
-                || Integer.valueOf(reserva.getHoraFinal()) > Integer.valueOf(restauranteDaReserva.horaFinal()) + 2) {
+                || Integer.valueOf(reserva.getHoraFinal()) > Integer.valueOf(restauranteDaReserva.horaFinal())) {
             throw new AvaliacaoNotFoundException.ControllerNotFoundException("Horario da reserva incompativel com restaurante!!!");
         }
-        if (restauranteDaReserva.mesasDisponiveis() < reserva.getNumeroPessoas()/4) {
+        if (restauranteDaReserva.mesasDisponiveis() < (double) reserva.getNumeroPessoas()/4) {
             throw new AvaliacaoNotFoundException.ControllerNotFoundException("Nao ha mesas disponiveis para este restaurante na data de: " + reservaDTO.dataReserva());
         } else {
             restauranteService.atualizaMesasDisponiveis(restauranteDaReserva, reservaDTO);
@@ -58,9 +61,13 @@ public class ReservaService {
     public ReservaDTO update(Long id, ReservaDTO reservaDTO) {
         try {
             Reserva reserva = reservaRepository.getReferenceById(id);
+            if (reserva == null || !reservaDTO.id().equals(reserva.getId())) {
+                throw new AvaliacaoNotFoundException.ControllerNotFoundException("Reserva não encontrada!!!");
+            }
             reserva.setCliente(reservaDTO.cliente());
             reserva.setRestaurante(reservaDTO.restaurante());
             reserva.setDataReserva(reservaDTO.dataReserva());
+            reserva.setNumeroPessoas(reservaDTO.numeroPessoas());
             reserva.setHoraInicio(reservaDTO.horaInicio());
             reserva.setHoraFinal(reservaDTO.horaFinal());
             reserva = reservaRepository.save(reserva);

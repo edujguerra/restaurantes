@@ -19,6 +19,10 @@ public class RestauranteService {
     @Autowired
     private RestauranteRepository repo;
 
+    public RestauranteService(RestauranteRepository restauranteRepository) {
+        this.repo = restauranteRepository;
+    }
+
     public Collection<RestauranteDTO> findAll() {
         var restaurantes = repo.findAll();
         return restaurantes
@@ -65,7 +69,7 @@ public class RestauranteService {
     public void atualizaMesasDisponiveis(RestauranteDTO restauranteDTO, ReservaDTO reservaDTO) {
         Restaurante restaurante = repo.getReferenceById(restauranteDTO.id());
         if (isMesaDisponivelNoHorario(restaurante.getId(), reservaDTO.dataReserva(), reservaDTO.horaInicio(), restaurante.getNumMesas())){
-            restaurante.setMesasDisponiveis(restaurante.getMesasDisponiveis() - (reservaDTO.numeroPessoas() / 4));
+            restaurante.setMesasDisponiveis((int) ((double) restaurante.getMesasDisponiveis() - ((double) reservaDTO.numeroPessoas() / 4)));
         } else {
             throw new AvaliacaoNotFoundException.ControllerNotFoundException("Nao ha mesas disponiveis para este restaurante na data: " +
                     reservaDTO.dataReserva() + " horario: " + reservaDTO.horaInicio());
@@ -75,11 +79,7 @@ public class RestauranteService {
 
     private boolean isMesaDisponivelNoHorario(Long idRestaurante, LocalDate dataReserva, String horaReserva, int totalDeMesas) {
         int mesasOcupadas = repo.mesasOcupadasNoHorario(idRestaurante, dataReserva, horaReserva);
-       if (mesasOcupadas < totalDeMesas) {
-            return true;
-        } else {
-            return false;
-        }
+       return (mesasOcupadas < totalDeMesas);
     }
 
     private RestauranteDTO toRestauranteDTO(Restaurante restaurante) {
