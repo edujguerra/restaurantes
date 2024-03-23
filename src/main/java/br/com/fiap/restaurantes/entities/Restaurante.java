@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
 
-import java.util.List;
-
 @Data
 @Builder(toBuilder = true)
 @NoArgsConstructor
@@ -42,7 +40,7 @@ public class Restaurante {
 
 	@Column(name = "nr_mesas", nullable = false)
 	private int numMesas;
-
+	@Column(name = "mesas_disponiveis", nullable = false)
 	private int mesasDisponiveis;
 
 }

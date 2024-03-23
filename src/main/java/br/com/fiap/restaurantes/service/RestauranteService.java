@@ -2,8 +2,12 @@ package br.com.fiap.restaurantes.service;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import br.com.fiap.restaurantes.dto.ReservaDTO;
+import br.com.fiap.restaurantes.exception.AvaliacaoNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.com.fiap.restaurantes.dto.RestauranteDTO;
 import br.com.fiap.restaurantes.entities.Restaurante;

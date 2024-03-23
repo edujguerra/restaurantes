@@ -6,8 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import br.com.fiap.restaurantes.entities.Restaurante;
 
-import java.time.LocalDate;
-import java.util.Date;
 
 @Repository	
 public interface RestauranteRepository extends JpaRepository<Restaurante, Long> {

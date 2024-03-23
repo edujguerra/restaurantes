@@ -1,69 +1,23 @@
 package br.com.fiap.restaurantes.service;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
-
-import br.com.fiap.restaurantes.exception.AvaliacaoNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import br.com.fiap.restaurantes.dto.TipoCozinhaDTO;
 import br.com.fiap.restaurantes.entities.TipoCozinha;
-import br.com.fiap.restaurantes.repository.TipoCozinhaRepository;
-import jakarta.persistence.EntityNotFoundException;
 
-@Service
-public class TipoCozinhaService {
-    @Autowired
-    private TipoCozinhaRepository repo;
+public interface TipoCozinhaService {
 
-    public Collection<TipoCozinhaDTO> findAll() {
-        var tipos = repo.findAll();
-        return tipos
-                .stream()
-                .map(this::toTipoCozinhaDTO)        
-                .collect(Collectors.toList());  
-    }
+    public Collection<TipoCozinhaDTO> findAll();
 
-    public TipoCozinhaDTO findById(Long id) {
-        var tipos =
-                repo.findById(id).orElseThrow(
-                        () -> new AvaliacaoNotFoundException.ControllerNotFoundException("Tipo de cozinha não encontrada !!!!")                );
-        return toTipoCozinhaDTO(tipos);
-    }
+    public TipoCozinhaDTO findById(Long id);
 
-    public TipoCozinhaDTO save(TipoCozinhaDTO tipoDTO) {
-        TipoCozinha tipo = toTipoCozinha(tipoDTO);
-        tipo = repo.save(tipo);
-        return toTipoCozinhaDTO(tipo);
-    }
+    public TipoCozinhaDTO save(TipoCozinhaDTO tipoDTO);
 
-    public TipoCozinhaDTO update(Long id, TipoCozinhaDTO tipoDTO) {
-        try {
-            TipoCozinha buscaTipo = repo.getReferenceById(id);
-            buscaTipo.setNome(tipoDTO.nome());
+    public TipoCozinhaDTO update(Long id, TipoCozinhaDTO tipoDTO);
 
-            return toTipoCozinhaDTO(buscaTipo);
-        } catch (EntityNotFoundException e) {
-            throw new AvaliacaoNotFoundException.ControllerNotFoundException("Tipo de cozinha não Encontrado !!!!!!!!");
-        }
-    }
+    public void delete(Long id);
 
-    public void delete(Long id) {
-        repo.deleteById(id);
-    }
+    public TipoCozinhaDTO toTipoCozinhaDTO(TipoCozinha tipo);
 
-    private TipoCozinhaDTO toTipoCozinhaDTO(TipoCozinha tipo) {
-        return new TipoCozinhaDTO(
-                tipo.getId(),
-                tipo.getNome()
-        );
-    }
-
-    private TipoCozinha toTipoCozinha(TipoCozinhaDTO tipoDTO) {
-        return new TipoCozinha(
-                tipoDTO.id(),
-                tipoDTO.nome()                
-        );
-    }
+    public TipoCozinha toTipoCozinha(TipoCozinhaDTO tipoDTO);
 }
