@@ -40,7 +40,7 @@ public class Restaurante {
 
 	@Column(name = "nr_mesas", nullable = false)
 	private int numMesas;
-	@Transient
+	@Column(name = "mesas_disponiveis", nullable = false)
 	private int mesasDisponiveis;
 
 }
