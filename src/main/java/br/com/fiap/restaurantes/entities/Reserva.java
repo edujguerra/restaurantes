@@ -20,7 +20,7 @@ public class Reserva {
    private Restaurante restaurante;
 
    @Column(name = "data_reserva", nullable = false)
-   private LocalDate dataReserva;
+   private String dataReserva;
 
    @Column(name = "numero_pessoas", nullable = false)
    private int numeroPessoas;
@@ -33,7 +33,7 @@ public class Reserva {
 
    public Reserva() {}
 
-   public Reserva(Long id, Cliente cliente, Restaurante restaurante, LocalDate dataReserva, int numeroPessoas,
+   public Reserva(Long id, Cliente cliente, Restaurante restaurante, String dataReserva, int numeroPessoas,
                   String horaInicio, String horaFinal) {
       this.id = id;
       this.cliente = cliente;
@@ -68,11 +68,11 @@ public class Reserva {
       this.restaurante = restaurante;
    }
 
-   public LocalDate getDataReserva() {
+   public String getDataReserva() {
       return dataReserva;
    }
 
-   public void setDataReserva(LocalDate dataReserva) {
+   public void setDataReserva(String dataReserva) {
       this.dataReserva = dataReserva;
    }
 

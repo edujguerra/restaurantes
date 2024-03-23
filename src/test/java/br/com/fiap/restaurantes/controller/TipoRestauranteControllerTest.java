@@ -1,13 +1,5 @@
 package br.com.fiap.restaurantes.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import br.com.fiap.restaurantes.dto.ClienteDTO;
-import br.com.fiap.restaurantes.entities.Cliente;
-import br.com.fiap.restaurantes.service.ClienteService;
-import lombok.NoArgsConstructor;
-
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -22,63 +14,63 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.fiap.restaurantes.dto.TipoCozinhaDTO;
+import br.com.fiap.restaurantes.service.TipoCozinhaService;
+
 @SpringBootTest
 @AutoConfigureMockMvc
-@NoArgsConstructor
-public class ClienteControllerTest {
+public class TipoRestauranteControllerTest {
     
-    @Autowired
+@Autowired
     private MockMvc mockMvc;
-
+    
     ObjectMapper objectMapper = new ObjectMapper();
 
     @MockBean
-    private ClienteService clienteService;
+    private TipoCozinhaService tipoCozinhaService;
 
-    public String criaClienteDTO() throws JsonProcessingException {
-        return objectMapper.writeValueAsString(new ClienteDTO(1L,"Thiago","teste@Teste.com",11994880144L));
-    }    
-
-    @Test
+ @Test
     public void findAll() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/clientes"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/tipocozinha"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void save() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/clientes")
+        mockMvc.perform(MockMvcRequestBuilders.post("/tipocozinha")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(criaClienteDTO()))
+            .content(objectMapper.writeValueAsString(criaTipoCozinhaDTO())))
             .andExpect(MockMvcResultMatchers.status().isCreated()); 
     }
 
     @Test
     public void findById() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/clientes/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/tipocozinha/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void update() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/clientes/1")
+        mockMvc.perform(MockMvcRequestBuilders.put("/tipocozinha/1")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(criaClienteDTO()))
+            .content(objectMapper.writeValueAsString(criaTipoCozinhaDTO())))
             .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void delete() throws Exception {
-        doNothing().when(clienteService).delete(1L);
-        mockMvc.perform(MockMvcRequestBuilders.delete("/clientes/1"))
+        doNothing().when(tipoCozinhaService).delete(1L);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/tipocozinha/1"))
                 .andExpect(MockMvcResultMatchers.status().is(204));
 
-                 verify(clienteService, times(1)).delete(1l);
+                verify(tipoCozinhaService, times(1)).delete(1l);
     }
 
-public Cliente criaCliente(){
-        return new Cliente(1L,"Thiago","teste@Teste.com",11994880144L);
+    public TipoCozinhaDTO criaTipoCozinhaDTO(){
+        return new TipoCozinhaDTO(1L,"testeTipo");
     }
-}
     
+}

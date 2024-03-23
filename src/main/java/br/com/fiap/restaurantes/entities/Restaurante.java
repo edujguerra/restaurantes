@@ -1,10 +1,14 @@
 package br.com.fiap.restaurantes.entities;
 
 import jakarta.persistence.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tb_restaurante")
 public class Restaurante {
 
@@ -32,87 +36,7 @@ public class Restaurante {
 
 	@Column(name = "nr_mesas", nullable = false)
 	private int numMesas;
-
+	@Transient
 	private int mesasDisponiveis;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-
-	public TipoCozinha getTipoCozinha() {
-		return tipoCozinha;
-	}
-
-	public void setTipoCozinha(TipoCozinha tipoCozinha) {
-		this.tipoCozinha = tipoCozinha;
-	}
-
-	public String getHoraInicio() {
-		return horaInicio;
-	}
-
-	public void setHoraInicio(String horaInicio) {
-		this.horaInicio = horaInicio;
-	}
-
-	public String getHoraFinal() {
-		return horaFinal;
-	}
-
-	public void setHoraFinal(String horaFinal) {
-		this.horaFinal = horaFinal;
-	}
-
-	public int getNumMesas() {
-		return numMesas;
-	}
-
-	public void setNumMesas(int numMesas) {
-		this.numMesas = numMesas;
-	}
-
-	public int getMesasDisponiveis() {
-		return mesasDisponiveis;
-	}
-
-	public void setMesasDisponiveis(int mesasDisponiveis) {
-		this.mesasDisponiveis = mesasDisponiveis;
-	}
-
-	public Restaurante(Long id, String nome, String endereco, TipoCozinha tipoCozinha, String horaInicio,
-					   String horaFinal, int numMesas, int mesasDisponiveis) {
-		this.id = id;
-		this.nome = nome;
-		this.endereco = endereco;
-		this.tipoCozinha = tipoCozinha;
-		this.horaInicio = horaInicio;
-		this.horaFinal = horaFinal;
-		this.numMesas = numMesas;
-		this.mesasDisponiveis = mesasDisponiveis;
-	}
-
-	public Restaurante() {
-
-	}
 
 }

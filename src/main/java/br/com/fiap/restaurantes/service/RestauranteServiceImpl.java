@@ -73,8 +73,8 @@ public class RestauranteServiceImpl implements RestauranteService {
         repo.save(restaurante);
     }
 
-    public boolean isMesaDisponivelNoHorario(Long idRestaurante, LocalDate dataReserva, String horaReserva, int totalDeMesas) {
-        int mesasOcupadas = repo.mesasOcupadasNoHorario(idRestaurante, dataReserva, Integer.valueOf(horaReserva));
+    public boolean isMesaDisponivelNoHorario(Long idRestaurante, String dataReserva, String horaReserva, int totalDeMesas) {
+        int mesasOcupadas = repo.mesasOcupadasNoHorario(idRestaurante, dataReserva, horaReserva);
        if (mesasOcupadas < totalDeMesas) {
             return true;
         } else {

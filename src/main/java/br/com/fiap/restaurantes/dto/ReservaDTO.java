@@ -10,7 +10,7 @@ public record ReservaDTO(
         Long id,
         Cliente cliente,
         Restaurante restaurante,
-        LocalDate dataReserva,
+        String dataReserva,
         int numeroPessoas,
         String horaInicio,
         String horaFinal
