@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 import java.util.Random;
 
 @Service
@@ -43,7 +45,7 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
         return true;
     }
 
-    public Page<Avaliacao> listarAvaliacoes(Pageable pageable) {
-        return avaliacaoRepository.listarAvaliacoes(pageable);
+    public Collection<Avaliacao> listarAvaliacoes() {
+        return avaliacaoRepository.listarAvaliacoes();
     }
 }

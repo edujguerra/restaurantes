@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+
 @Repository
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long> {
     @Query("SELECT a FROM Avaliacao a ORDER BY a.dataAvaliacao DESC")
-    Page<Avaliacao> listarAvaliacoes(Pageable pageable);
+    Collection<Avaliacao> listarAvaliacoes();
 }

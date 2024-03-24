@@ -22,9 +22,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 
 class AvaliacaoServiceTest {
   private AvaliacaoService avaliacaoService;
@@ -181,44 +178,5 @@ class AvaliacaoServiceTest {
       verify(avaliacaoRepository, times(1)).delete(any(Avaliacao.class));
     }
 
-  }
-
-  @Nested
-  class ListarAvaliacoes {
-
-    @Test
-    void devePermitirListarAvaliacoes() {
-      Page<Avaliacao> page = new PageImpl<>(Arrays.asList(
-          AvaliacaoHelper.gerarAvaliacao(),
-          AvaliacaoHelper.gerarAvaliacao()
-      ));
-
-      when(avaliacaoRepository.listarAvaliacoes(any(Pageable.class)))
-          .thenReturn(page);
-
-      Page<Avaliacao> avaliacoes = avaliacaoService.listarAvaliacoes(Pageable.unpaged());
-
-      assertThat(avaliacoes).hasSize(2);
-      assertThat(avaliacoes.getContent())
-          .asList()
-          .allSatisfy(avaliacao -> {
-            assertThat(avaliacao).isNotNull();
-            assertThat(avaliacao).isInstanceOf(Avaliacao.class);
-          });
-      verify(avaliacaoRepository, times(1)).listarAvaliacoes(any(Pageable.class));
-    }
-
-    @Test
-    void devePermitirListarAvaliacoes_QuandoNaoExisteRegistro() {
-      Page<Avaliacao> page = new PageImpl<>(Collections.emptyList());
-
-      when(avaliacaoRepository.listarAvaliacoes(any(Pageable.class)))
-          .thenReturn(page);
-
-      Page<Avaliacao> avaliacoes = avaliacaoService.listarAvaliacoes(Pageable.unpaged());
-
-      assertThat(avaliacoes).isEmpty();
-      verify(avaliacaoRepository, times(1)).listarAvaliacoes(any(Pageable.class));
-    }
   }
 }

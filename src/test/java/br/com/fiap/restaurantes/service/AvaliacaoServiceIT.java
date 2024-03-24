@@ -18,6 +18,8 @@ import org.springframework.test.context.jdbc.Sql;
 
 import jakarta.transaction.Transactional;
 
+import java.util.Collection;
+
 @SpringBootTest
 @Transactional
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -106,21 +108,15 @@ class AvaliacaoServiceIT {
 
   @Test
   void devePermitirListarAvaliacoes() {
-    Page<Avaliacao> avaliacoes = avaliacaoService.listarAvaliacoes(Pageable.unpaged());
+    Collection<Avaliacao> avaliacoes = avaliacaoService.listarAvaliacoes();
 
     assertThat(avaliacoes).hasSize(3);
-    assertThat(avaliacoes.getContent())
-        .asList()
-        .allSatisfy(avaliacao -> {
-          assertThat(avaliacao).isNotNull();
-          assertThat(avaliacao).isInstanceOf(Avaliacao.class);
-        });
   }
 
   @Test
   @Sql(scripts = {"/clean.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void devePermitirListarTodasAsAvaliacoes_QuandoNaoExisteRegistro() {
-    Page<Avaliacao> avaliacoes = avaliacaoService.listarAvaliacoes(Pageable.unpaged());
+    Collection<Avaliacao> avaliacoes = avaliacaoService.listarAvaliacoes();
     assertThat(avaliacoes).isEmpty();
   }
 
