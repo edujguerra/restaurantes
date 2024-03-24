@@ -1,0 +1,39 @@
+server:
+  port: 8080
+  shutdown: graceful
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+spring:
+  datasource:
+    url: jdbc:mariadb://127.0.0.1:3307/restaurantes
+    name: restaurantes
+    username: user
+    password: password
+    driverClassName: org.mariadb.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  sql:
+    init:
+      mode: always
+  lifecycle:
+    timeout-per-shutdown-phase: "5s"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,shutdown
+  endpoint:
+    shutdown:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    org.example: INFO
+    org.springframework: INFO
