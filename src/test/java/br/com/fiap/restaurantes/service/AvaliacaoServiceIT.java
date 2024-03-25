@@ -3,6 +3,7 @@ package br.com.fiap.restaurantes.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import br.com.fiap.restaurantes.dto.AvaliacaoDTO;
 import br.com.fiap.restaurantes.entities.Avaliacao;
 import br.com.fiap.restaurantes.exception.AvaliacaoNotFoundException;
 import br.com.fiap.restaurantes.repository.AvaliacaoRepository;
@@ -10,10 +11,7 @@ import br.com.fiap.restaurantes.utils.AvaliacaoHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 
 import jakarta.transaction.Transactional;
@@ -102,13 +100,13 @@ class AvaliacaoServiceIT {
   @Test
   void devePermitirApagarAvaliacao() {
     var avaliacaoRegistrada = AvaliacaoHelper.registrarAvaliacao(avaliacaoRepository);
-    var resultado = avaliacaoService.apagarAvaliacao(avaliacaoRegistrada.getId());
+    var resultado = avaliacaoService.delete(avaliacaoRegistrada.getId());
     assertThat(resultado).isTrue();
   }
 
   @Test
   void devePermitirListarAvaliacoes() {
-    Collection<Avaliacao> avaliacoes = avaliacaoService.listarAvaliacoes();
+    Collection<Avaliacao> avaliacoes = avaliacaoService.findAll();
 
     assertThat(avaliacoes).hasSize(3);
   }
@@ -116,7 +114,7 @@ class AvaliacaoServiceIT {
   @Test
   @Sql(scripts = {"/clean.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void devePermitirListarTodasAsAvaliacoes_QuandoNaoExisteRegistro() {
-    Collection<Avaliacao> avaliacoes = avaliacaoService.listarAvaliacoes();
+    Collection<Avaliacao> avaliacoes = avaliacaoService.findAll();
     assertThat(avaliacoes).isEmpty();
   }
 

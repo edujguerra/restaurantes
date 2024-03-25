@@ -1,9 +1,8 @@
 package br.com.fiap.restaurantes.utils;
 
-import br.com.fiap.restaurantes.dto.AvaliacaoRequest;
+import br.com.fiap.restaurantes.dto.AvaliacaoDTO;
 import br.com.fiap.restaurantes.dto.ClienteDTO;
 import br.com.fiap.restaurantes.dto.RestauranteDTO;
-import br.com.fiap.restaurantes.dto.TipoCozinhaDTO;
 import br.com.fiap.restaurantes.entities.Avaliacao;
 import br.com.fiap.restaurantes.entities.Cliente;
 import br.com.fiap.restaurantes.entities.Restaurante;
@@ -17,7 +16,7 @@ import java.util.UUID;
 
 public abstract class AvaliacaoHelper {
 
-    public static AvaliacaoRequest gerarAvaliacaoRequest() {
+    public static AvaliacaoDTO gerarAvaliacaoRequest() {
         TipoCozinha tipoCozinha = new TipoCozinha(1L, "Teste");
         ClienteDTO clienteDTO = new ClienteDTO(1L, "Teste", "email",1234L );
         RestauranteDTO restauranteDTO = new RestauranteDTO(1L, "nome teste",
@@ -25,13 +24,9 @@ public abstract class AvaliacaoHelper {
                 10,10);
         var timestamp = LocalDateTime.now();
 
-        return AvaliacaoRequest.builder()
-                .cliente(clienteDTO)
-                .restaurante(restauranteDTO)
-                .dataAvaliacao(LocalDate.from(timestamp))
-                .nota(7)
-                .descricao("Avaliação Boa")
-                .build();
+        AvaliacaoDTO avaliacaoDTO = new AvaliacaoDTO(1L,clienteDTO, restauranteDTO,
+                "Avaliação Boa", 7, LocalDate.from(timestamp));
+        return avaliacaoDTO;
     }
 
     public static Avaliacao gerarAvaliacao() {

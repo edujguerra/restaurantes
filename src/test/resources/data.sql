@@ -22,19 +22,19 @@ INSERT INTO restaurantes.tb_cliente
 values (1,"EMAIL UM", "CLIENTE UM", 213213);
 
 INSERT restaurantes.tb_avaliacao
-    (dt_avaliacao, ds_descricao, nr_nota, id_cliente, id_restaurante)
+    (id_avaliacao, dt_avaliacao, ds_descricao, nr_nota, id_cliente, id_restaurante)
 values
-   ("2024-03-20", "Gostei do lugar.", 8, 1,1);
+   (1, "2024-03-20", "Gostei do lugar.", 8, 1,1);
 
 INSERT restaurantes.tb_avaliacao
-(dt_avaliacao, ds_descricao, nr_nota, id_cliente, id_restaurante)
+   (id_avaliacao, dt_avaliacao, ds_descricao, nr_nota, id_cliente, id_restaurante)
 values
-    ("2024-03-20", "Não gostei muito.", 3, 1,1);
+    (2, "2024-03-20", "Não gostei muito.", 3, 1,1);
 
 INSERT restaurantes.tb_avaliacao
-(dt_avaliacao, ds_descricao, nr_nota, id_cliente, id_restaurante)
+    (id_avaliacao, dt_avaliacao, ds_descricao, nr_nota, id_cliente, id_restaurante)
 values
-    ("2024-03-20", "Achei otimo.", 10, 1,1);
+    (3, "2024-03-20", "Achei otimo.", 10, 1,1);
 
 --Inserts para a tabela Reserva--
 INSERT INTO restaurantes.tb_restaurante

@@ -1,11 +1,10 @@
 package br.com.fiap.restaurantes.service;
 
+import br.com.fiap.restaurantes.dto.AvaliacaoDTO;
 import br.com.fiap.restaurantes.entities.Avaliacao;
 import br.com.fiap.restaurantes.exception.AvaliacaoNotFoundException;
 import br.com.fiap.restaurantes.repository.AvaliacaoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -39,13 +38,13 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
         return avaliacaoRepository.save(avaliacao);
     }
 
-    public boolean apagarAvaliacao(Long id) {
-        var avaliacao = buscarAvaliacao(id);
-        avaliacaoRepository.delete(avaliacao);
+    public boolean delete(Long id) {
+        avaliacaoRepository.deleteById(id);
         return true;
     }
 
-    public Collection<Avaliacao> listarAvaliacoes() {
+    public Collection<Avaliacao> findAll() {
+
         return avaliacaoRepository.listarAvaliacoes();
     }
 }

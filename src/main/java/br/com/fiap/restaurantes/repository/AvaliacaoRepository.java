@@ -1,8 +1,7 @@
 package br.com.fiap.restaurantes.repository;
 
+import br.com.fiap.restaurantes.dto.AvaliacaoDTO;
 import br.com.fiap.restaurantes.entities.Avaliacao;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
