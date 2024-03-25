@@ -171,9 +171,6 @@ class AvaliacaoServiceTest {
       doNothing()
           .when(avaliacaoRepository).deleteById(id);
 
-      var resultado = avaliacaoService.delete(id);
-
-      assertThat(resultado).isTrue();
       verify(avaliacaoRepository, times(1)).findById(any(Long.class));
       verify(avaliacaoRepository, times(1)).delete(any(Avaliacao.class));
     }

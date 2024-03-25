@@ -38,9 +38,9 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
         return avaliacaoRepository.save(avaliacao);
     }
 
-    public boolean delete(Long id) {
+    public void delete(Long id) {
+
         avaliacaoRepository.deleteById(id);
-        return true;
     }
 
     public Collection<Avaliacao> findAll() {

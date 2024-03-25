@@ -37,14 +37,14 @@ public class AvaliacaoControllerTest {
 
     @Test
     public void findAll() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/avaliacao"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/avaliacoes"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void save() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/avaliacao")
+        mockMvc.perform(MockMvcRequestBuilders.post("/avaliacoes")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(criaAvaliacao())))
             .andExpect(MockMvcResultMatchers.status().isCreated()); 
@@ -52,13 +52,13 @@ public class AvaliacaoControllerTest {
 
     @Test
     public void findById() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/avaliacao/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/avaliacoes/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void update() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/tipocozinha/1")
+        mockMvc.perform(MockMvcRequestBuilders.put("/avaliacoes/1")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(criaAvaliacao())))
             .andExpect(MockMvcResultMatchers.status().isOk());

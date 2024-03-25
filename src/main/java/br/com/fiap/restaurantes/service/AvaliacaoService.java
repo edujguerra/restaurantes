@@ -8,7 +8,7 @@ import java.util.Collection;
 public interface AvaliacaoService {
     Avaliacao criarAvaliacao(Avaliacao avaliacao);
     Avaliacao buscarAvaliacao(Long id);
-    boolean delete(Long id);
+    void delete(Long id);
     Avaliacao alterarAvaliacao(Long id, Avaliacao avaliacaoNova);
     Collection<Avaliacao> findAll();
 }

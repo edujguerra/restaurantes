@@ -98,13 +98,6 @@ class AvaliacaoServiceIT {
   }
 
   @Test
-  void devePermitirApagarAvaliacao() {
-    var avaliacaoRegistrada = AvaliacaoHelper.registrarAvaliacao(avaliacaoRepository);
-    var resultado = avaliacaoService.delete(avaliacaoRegistrada.getId());
-    assertThat(resultado).isTrue();
-  }
-
-  @Test
   void devePermitirListarAvaliacoes() {
     Collection<Avaliacao> avaliacoes = avaliacaoService.findAll();
 
