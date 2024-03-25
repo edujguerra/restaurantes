@@ -35,6 +35,19 @@ public class RestauranteServiceTest {
     @Mock
     private RestauranteRepository restauranteRepository;
 
+    AutoCloseable openMocks;
+
+    @BeforeEach
+    void setUp() {
+        openMocks = MockitoAnnotations.openMocks(this);
+        restauranteService = new RestauranteServiceImpl(restauranteRepository);
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        openMocks.close();
+    }
+
     @Test
     void deveAtualizarMesasDisponiveis() {
 
