@@ -72,7 +72,7 @@ class AvaliacaoServiceIT {
 
   @Test
   void deveGerarExcecao_QuandoBuscarAvaliacao_IdNaoExistente() {
-    var id = 1L;
+    var id = 1666L;
 
     assertThatThrownBy(() -> avaliacaoService.buscarAvaliacao(id))
         .isInstanceOf(AvaliacaoNotFoundException.class)

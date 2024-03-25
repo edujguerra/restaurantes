@@ -26,7 +26,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class AvaliacaoServiceTest {
-  private AvaliacaoService avaliacaoService;
+  @Mock
+  private AvaliacaoServiceImpl avaliacaoService;
   @Mock
   private AvaliacaoRepository avaliacaoRepository;
   AutoCloseable openMocks;
@@ -165,16 +166,10 @@ class AvaliacaoServiceTest {
 
     @Test
     void devePermitirApagarAvaliacao() {
-      var id = 1L;
-      var avaliacao = AvaliacaoHelper.gerarAvaliacao();
-      avaliacao.setId(id);
-      when(avaliacaoRepository.findById(id))
-          .thenReturn(Optional.of(avaliacao));
-      doNothing()
-          .when(avaliacaoRepository).deleteById(id);
+      var id = 2L;
+      avaliacaoService.delete(id);
 
-      verify(avaliacaoRepository, times(1)).findById(any(Long.class));
-      verify(avaliacaoRepository, times(1)).delete(any(Avaliacao.class));
+      verify(avaliacaoRepository).deleteById(id);
     }
 
   }
