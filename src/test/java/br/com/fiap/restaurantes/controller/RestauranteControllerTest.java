@@ -4,6 +4,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import br.com.fiap.restaurantes.service.RestauranteServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -31,7 +32,7 @@ public class RestauranteControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @MockBean
-    private RestauranteService restauranteService;
+    private RestauranteServiceImpl restauranteService;
 
     public String criaRestauranteDTO() throws JsonProcessingException {
         return objectMapper.writeValueAsString(new RestauranteDTO(1L,"RESTAURANTE UM","AVENIDA UM",new TipoCozinha(1L,"LANCHES"),"22:00","06:00",30,20));
@@ -39,6 +40,7 @@ public class RestauranteControllerTest {
 
     @Test
     public void findAll() throws Exception {
+
         mockMvc.perform(MockMvcRequestBuilders.get("/restaurante"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }

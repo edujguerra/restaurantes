@@ -1,5 +1,6 @@
 package br.com.fiap.restaurantes.controller;
 
+import br.com.fiap.restaurantes.service.ClienteServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,7 +34,7 @@ public class ClienteControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @MockBean
-    private ClienteService clienteService;
+    private ClienteServiceImpl clienteService;
 
     public String criaClienteDTO() throws JsonProcessingException {
         return objectMapper.writeValueAsString(new ClienteDTO(1L,"CLIENTE UM","EMAIL UM",213213l));

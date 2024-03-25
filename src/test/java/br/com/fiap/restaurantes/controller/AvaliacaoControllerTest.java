@@ -5,7 +5,10 @@ import br.com.fiap.restaurantes.dto.ClienteDTO;
 import br.com.fiap.restaurantes.dto.RestauranteDTO;
 import br.com.fiap.restaurantes.entities.TipoCozinha;
 import br.com.fiap.restaurantes.service.AvaliacaoService;
+import br.com.fiap.restaurantes.service.AvaliacaoServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.mockito.Mockito.*;
 
@@ -33,10 +37,11 @@ public class AvaliacaoControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @MockBean
-    private AvaliacaoService avaliacaoService;
+    private AvaliacaoServiceImpl avaliacaoService;
 
     @Test
     public void findAll() throws Exception {
+
         mockMvc.perform(MockMvcRequestBuilders.get("/avaliacoes"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -73,16 +78,17 @@ public class AvaliacaoControllerTest {
                 verify(avaliacaoService, times(1)).delete(1l);
     }
 
-    public AvaliacaoDTO criaAvaliacao(){
+    public AvaliacaoDTO criaAvaliacao() throws JsonProcessingException {
         TipoCozinha tipoCozinha = new TipoCozinha(1L, "Teste");
         ClienteDTO clienteDTO = new ClienteDTO(1L, "Teste", "email",1234L );
         RestauranteDTO restauranteDTO = new RestauranteDTO(1L, "nome teste",
                 "endereço",  tipoCozinha, "01:00", "06:00",
                 10,10);
-        var timestamp = LocalDateTime.now();
+
+        LocalDate dateFormated = LocalDate.parse("2019-12-31");
 
         AvaliacaoDTO avaliacaoDTO = new AvaliacaoDTO(1L, clienteDTO,
-                restauranteDTO, "Avaliação Boa", 7, LocalDate.from(timestamp));
+                restauranteDTO, "Avaliação Boa", 7, dateFormated);
 
         return avaliacaoDTO;
     }

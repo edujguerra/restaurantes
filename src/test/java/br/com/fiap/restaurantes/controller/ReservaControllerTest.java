@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import java.util.Date;
 
+import br.com.fiap.restaurantes.service.ReservaServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ReservaControllerTest {
     RestauranteControllerTest restauranteControllerTest = new RestauranteControllerTest();
 
     @MockBean
-    ReservaService reservaService;
+    ReservaServiceImpl reservaService;
 
     public ReservaDTO criaReservaDTO() throws JsonProcessingException {
         return new ReservaDTO(1L,clienteControllerTest.criaCliente(),restauranteControllerTest.criaRestaurante(),new Date().toString(),4,"11","12");

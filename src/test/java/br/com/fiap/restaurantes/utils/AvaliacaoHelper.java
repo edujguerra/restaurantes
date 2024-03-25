@@ -40,7 +40,7 @@ public abstract class AvaliacaoHelper {
         return Avaliacao.builder()
                 .cliente(cliente)
                 .restaurante(restaurante)
-                .dataAvaliacao(LocalDateTime.now())
+                .dataAvaliacao(LocalDate.now())
                 .nota(7)
                 .descricao("Avaliação Boa")
                 .build();
@@ -57,7 +57,7 @@ public abstract class AvaliacaoHelper {
                 .id(new Random().nextLong(10000))
                 .cliente(cliente)
                 .restaurante(restaurante)
-                .dataAvaliacao(LocalDateTime.now())
+                .dataAvaliacao(LocalDate.now())
                 .nota(7)
                 .descricao("Avaliação Boa")
                 .build();

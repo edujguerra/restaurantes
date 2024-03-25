@@ -2,7 +2,6 @@ package br.com.fiap.restaurantes.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -10,6 +9,7 @@ import lombok.Data;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -42,13 +42,13 @@ public class Avaliacao {
     private int nota = 0;
 
     @CreationTimestamp
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSS")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "dt_avaliacao")
-    private LocalDateTime dataAvaliacao;
+    private LocalDate dataAvaliacao;
 
     @PrePersist
     public void prePersist() {
         var timestamp = LocalDateTime.now();
-        dataAvaliacao = timestamp;
+        dataAvaliacao = LocalDate.from(timestamp);
     }
 }

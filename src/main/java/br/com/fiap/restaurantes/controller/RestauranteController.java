@@ -25,6 +25,7 @@ public class RestauranteController {
 
     @GetMapping
     public ResponseEntity<Collection<RestauranteDTO>> findAll(){
+
         var restaurantes = service.findAll();
         return ResponseEntity.ok(restaurantes);
     }

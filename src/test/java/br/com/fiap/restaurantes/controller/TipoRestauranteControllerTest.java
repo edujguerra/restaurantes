@@ -66,7 +66,7 @@ public class TipoRestauranteControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/tipocozinha/1"))
                 .andExpect(MockMvcResultMatchers.status().is(204));
 
-                verify(tipoCozinhaService, times(1)).delete(1l);
+                verify(tipoCozinhaService, times(1)).delete(1L);
     }
 
     public TipoCozinhaDTO criaTipoCozinhaDTO(){

@@ -9,10 +9,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.test.context.ActiveProfiles;
 
 @Transactional
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles("tests")
 public class AvaliacaoRepositoryIT {
 
     @Autowired
