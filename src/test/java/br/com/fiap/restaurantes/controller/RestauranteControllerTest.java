@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import br.com.fiap.restaurantes.service.RestauranteServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -24,6 +25,7 @@ import br.com.fiap.restaurantes.entities.TipoCozinha;
 import br.com.fiap.restaurantes.service.RestauranteService;
 
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @AutoConfigureMockMvc
 public class RestauranteControllerTest {
     @Autowired

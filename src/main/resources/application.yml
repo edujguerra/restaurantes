@@ -16,7 +16,8 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update
+      #ddl-auto: update
+      ddl-auto: none
     show-sql: true
   sql:
     init:

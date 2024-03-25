@@ -4,14 +4,13 @@ import br.com.fiap.restaurantes.dto.AvaliacaoDTO;
 import br.com.fiap.restaurantes.dto.ClienteDTO;
 import br.com.fiap.restaurantes.dto.RestauranteDTO;
 import br.com.fiap.restaurantes.entities.TipoCozinha;
-import br.com.fiap.restaurantes.service.AvaliacaoService;
 import br.com.fiap.restaurantes.service.AvaliacaoServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,8 +20,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static org.mockito.Mockito.*;
 
@@ -75,7 +72,7 @@ public class AvaliacaoControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/avaliacoes/1"))
                 .andExpect(MockMvcResultMatchers.status().is(204));
 
-                verify(avaliacaoService, times(1)).delete(1l);
+            verify(avaliacaoService, times(1)).delete(1l);
     }
 
     public AvaliacaoDTO criaAvaliacao() throws JsonProcessingException {

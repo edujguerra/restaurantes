@@ -4,7 +4,6 @@ package br.com.fiap.restaurantes.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -22,12 +21,14 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class AvaliacaoServiceTest {
-  @Mock
-  private AvaliacaoServiceImpl avaliacaoService;
+public class AvaliacaoServiceTest {
+
+  private AvaliacaoService avaliacaoService;
   @Mock
   private AvaliacaoRepository avaliacaoRepository;
   AutoCloseable openMocks;
@@ -42,6 +43,7 @@ class AvaliacaoServiceTest {
   void tearDown() throws Exception {
     openMocks.close();
   }
+
 
   @Nested
   class RegistrarAvaliacao {
@@ -112,7 +114,7 @@ class AvaliacaoServiceTest {
 
     @Test
     void devePermirirAlterarAvaliacao() {
-      var id = new Random().nextLong();
+      var id = 1L;
       var avaliacaoAntiga = AvaliacaoHelper.gerarAvaliacao();
       avaliacaoAntiga.setId(id);
       var avaliacaoNova = avaliacaoAntiga;

@@ -4,6 +4,7 @@ import br.com.fiap.restaurantes.dto.AvaliacaoDTO;
 import br.com.fiap.restaurantes.entities.Avaliacao;
 import br.com.fiap.restaurantes.exception.AvaliacaoNotFoundException;
 import br.com.fiap.restaurantes.repository.AvaliacaoRepository;
+import br.com.fiap.restaurantes.repository.ReservaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,13 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class AvaliacaoServiceImpl implements AvaliacaoService {
 
-    private final AvaliacaoRepository avaliacaoRepository;
+    private AvaliacaoRepository avaliacaoRepository;
+
+    public AvaliacaoServiceImpl(AvaliacaoRepository avaliacaoRepository) {
+        this.avaliacaoRepository = avaliacaoRepository;
+    }
+
+    @Override
     public Avaliacao criarAvaliacao(Avaliacao avaliacao) {
         avaliacao.setId(new Random().nextLong(1000));
         return avaliacaoRepository.save(avaliacao);

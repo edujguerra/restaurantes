@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.fiap.restaurantes.dto.ClienteDTO;
 import br.com.fiap.restaurantes.entities.Cliente;
-import br.com.fiap.restaurantes.service.ClienteService;
-import lombok.NoArgsConstructor;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -15,6 +13,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -24,8 +23,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @AutoConfigureMockMvc
-@NoArgsConstructor
 public class ClienteControllerTest {
     
     @Autowired
@@ -78,8 +77,8 @@ public class ClienteControllerTest {
                  verify(clienteService, times(1)).delete(1l);
     }
 
-public Cliente criaCliente(){
-        return new Cliente(1L,"CLIENTE UM","EMAIL UM",213213l);
+    public Cliente criaCliente(){
+            return new Cliente(1L,"CLIENTE UM","EMAIL UM",213213l);
+        }
     }
-}
     

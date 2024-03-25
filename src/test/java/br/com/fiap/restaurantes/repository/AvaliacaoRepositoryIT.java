@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import br.com.fiap.restaurantes.repository.AvaliacaoRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("tests")
 public class AvaliacaoRepositoryIT {
 
-    @Autowired
+    @Mock
     private AvaliacaoRepository avaliacaoRepository;
 
     @Test

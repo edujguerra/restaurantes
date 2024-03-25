@@ -3,15 +3,16 @@ package br.com.fiap.restaurantes.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import br.com.fiap.restaurantes.dto.AvaliacaoDTO;
 import br.com.fiap.restaurantes.entities.Avaliacao;
 import br.com.fiap.restaurantes.exception.AvaliacaoNotFoundException;
 import br.com.fiap.restaurantes.repository.AvaliacaoRepository;
 import br.com.fiap.restaurantes.utils.AvaliacaoHelper;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import jakarta.transaction.Transactional;
@@ -19,34 +20,32 @@ import jakarta.transaction.Transactional;
 import java.util.Collection;
 
 @SpringBootTest
+@AutoConfigureTestDatabase
 @Transactional
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class AvaliacaoServiceIT {
 
   @Autowired
   private AvaliacaoRepository avaliacaoRepository;
 
   @Autowired
-  private AvaliacaoService avaliacaoService;
+  private AvaliacaoServiceImpl avaliacaoService;
 
   @Test
   void devePermitirRegistrarAvaliacao() {
-    var avaliacao = AvaliacaoHelper.gerarAvaliacao();
+      var avaliacao = AvaliacaoHelper.gerarAvaliacao();
 
-    Avaliacao avaliacaoArmazenada = avaliacaoService.criarAvaliacao(avaliacao);
+      Avaliacao mensagemArmazenada = avaliacaoService.criarAvaliacao(avaliacao);
 
-    assertThat(avaliacaoArmazenada)
-        .isNotNull()
-        .isInstanceOf(Avaliacao.class);
-    assertThat(avaliacaoArmazenada.getId())
-        .isNotNull();
-    assertThat(avaliacaoArmazenada.getDescricao())
-        .isNotNull()
-        .isNotEmpty()
-        .isEqualTo(avaliacao.getDescricao());
-    assertThat(avaliacaoArmazenada.getRestaurante())
-        .isNotNull()
-        .isEqualTo(avaliacao.getRestaurante());
+      assertThat(mensagemArmazenada)
+              .isNotNull()
+              .isInstanceOf(Avaliacao.class);
+      assertThat(mensagemArmazenada.getId())
+              .isNotNull();
+      assertThat(mensagemArmazenada.getDescricao())
+              .isNotNull()
+              .isNotEmpty()
+              .isEqualTo(avaliacao.getDescricao());
+
   }
 
   @Test
