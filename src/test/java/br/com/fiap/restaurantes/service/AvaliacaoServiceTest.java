@@ -21,10 +21,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 public class AvaliacaoServiceTest {
 
@@ -163,9 +162,6 @@ public class AvaliacaoServiceTest {
 
   }
 
-  @Nested
-  class RemoverAvaliacao {
-
     @Test
     void devePermitirApagarAvaliacao() {
       var id = 2L;
@@ -174,5 +170,30 @@ public class AvaliacaoServiceTest {
       verify(avaliacaoRepository).deleteById(id);
     }
 
+    @Test
+    void devePermitirListarAvaliacoes() {
+      Collection<Avaliacao> listaAvaliacoes = new ArrayList<>();
+      var avaliacao1 = AvaliacaoHelper.gerarAvaliacao();
+      var avaliacao2 = AvaliacaoHelper.gerarAvaliacaoCompleta();
+      listaAvaliacoes.add(avaliacao1);
+      listaAvaliacoes.add(avaliacao2);
+
+      when(avaliacaoRepository.listarAvaliacoes()).thenReturn(listaAvaliacoes);
+      Collection<Avaliacao> avaliacoes = avaliacaoService.findAll();
+
+      assertThat(avaliacoes).hasSize(2);
+    }
+
+  @Test
+  void devePermitirListarAvaliacoes_QuandoNaoExisteRegistro() {
+    Collection<Avaliacao> page = new ArrayList<>();
+
+    when(avaliacaoRepository.listarAvaliacoes())
+            .thenReturn(page);
+
+    Collection<Avaliacao> avaliacoes = avaliacaoService.findAll();
+
+    assertThat(avaliacoes).isEmpty();
+    verify(avaliacaoRepository, times(1)).listarAvaliacoes();
   }
 }

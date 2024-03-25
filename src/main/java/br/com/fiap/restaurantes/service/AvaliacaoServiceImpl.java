@@ -15,15 +15,8 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class AvaliacaoServiceImpl implements AvaliacaoService {
 
-    private AvaliacaoRepository avaliacaoRepository;
-
-    public AvaliacaoServiceImpl(AvaliacaoRepository avaliacaoRepository) {
-        this.avaliacaoRepository = avaliacaoRepository;
-    }
-
-    @Override
+    private final AvaliacaoRepository avaliacaoRepository;
     public Avaliacao criarAvaliacao(Avaliacao avaliacao) {
-        avaliacao.setId(new Random().nextLong(1000));
         return avaliacaoRepository.save(avaliacao);
     }
 

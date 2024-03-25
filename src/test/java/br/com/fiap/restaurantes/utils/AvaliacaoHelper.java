@@ -38,6 +38,7 @@ public abstract class AvaliacaoHelper {
         var timestamp = LocalDateTime.now();
 
         return Avaliacao.builder()
+                .id(new Random().nextLong(10000))
                 .cliente(cliente)
                 .restaurante(restaurante)
                 .dataAvaliacao(LocalDate.now())
