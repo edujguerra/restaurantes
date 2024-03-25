@@ -16,7 +16,11 @@ public class SwaggerConfig {
                 GroupedOpenApi.builder()
                 .group("reserva-api**")
                 .pathsToMatch("/reservas/**")
-                .build()
+                .build(),
+                GroupedOpenApi.builder()
+                        .group("avaliacao-api**")
+                        .pathsToMatch("/avaliacao/**")
+                        .build()
         );
     }
 
