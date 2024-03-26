@@ -8,6 +8,7 @@ import lombok.Builder;
 
 @Entity
 @Builder
+@Table(name = "tb_reserva")
 public class Reserva {
 
    @Id

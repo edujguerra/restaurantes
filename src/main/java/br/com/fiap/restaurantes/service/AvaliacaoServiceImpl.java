@@ -1,12 +1,14 @@
 package br.com.fiap.restaurantes.service;
 
+import br.com.fiap.restaurantes.dto.AvaliacaoDTO;
 import br.com.fiap.restaurantes.entities.Avaliacao;
 import br.com.fiap.restaurantes.exception.AvaliacaoNotFoundException;
 import br.com.fiap.restaurantes.repository.AvaliacaoRepository;
+import br.com.fiap.restaurantes.repository.ReservaRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 import java.util.Random;
 
 @Service
@@ -15,7 +17,6 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
 
     private final AvaliacaoRepository avaliacaoRepository;
     public Avaliacao criarAvaliacao(Avaliacao avaliacao) {
-        avaliacao.setId(new Random().nextLong(1000));
         return avaliacaoRepository.save(avaliacao);
     }
 
@@ -37,13 +38,13 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
         return avaliacaoRepository.save(avaliacao);
     }
 
-    public boolean apagarAvaliacao(Long id) {
-        var avaliacao = buscarAvaliacao(id);
-        avaliacaoRepository.delete(avaliacao);
-        return true;
+    public void delete(Long id) {
+
+        avaliacaoRepository.deleteById(id);
     }
 
-    public Page<Avaliacao> listarAvaliacoes(Pageable pageable) {
-        return avaliacaoRepository.listarAvaliacoes(pageable);
+    public Collection<Avaliacao> findAll() {
+
+        return avaliacaoRepository.listarAvaliacoes();
     }
 }

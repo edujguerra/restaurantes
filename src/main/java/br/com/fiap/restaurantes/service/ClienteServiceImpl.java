@@ -55,6 +55,7 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     public void delete(Long id) {
+
         clienteRepository.deleteById(id);
     }
 

@@ -71,8 +71,7 @@ public class RestauranteServiceImpl implements RestauranteService{
     }
 
     @Override
-    public void atualizaMesasDisponiveis(RestauranteDTO restauranteDTO, ReservaDTO reservaDTO) {
-        Restaurante restaurante = repo.getReferenceById(restauranteDTO.id());
+    public void atualizaMesasDisponiveis(RestauranteDTO restauranteDTO, ReservaDTO reservaDTO) {Restaurante restaurante = repo.getReferenceById(restauranteDTO.id());
         if (isMesaDisponivelNoHorario(restaurante.getId(), reservaDTO.dataReserva(), reservaDTO.horaInicio(), restaurante.getNumMesas())){
             restaurante.setMesasDisponiveis((int) ((double) restaurante.getMesasDisponiveis() - ((double) reservaDTO.numeroPessoas() / 4)));
         } else {

@@ -6,9 +6,14 @@ import static org.mockito.Mockito.verify;
 
 import java.util.Date;
 
+import br.com.fiap.restaurantes.service.ReservaServiceImpl;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -23,9 +28,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.fiap.restaurantes.dto.ReservaDTO;
 import br.com.fiap.restaurantes.service.ReservaService;
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @AutoConfigureMockMvc
 public class ReservaControllerTest {
-    
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -36,7 +42,7 @@ public class ReservaControllerTest {
     RestauranteControllerTest restauranteControllerTest = new RestauranteControllerTest();
 
     @MockBean
-    ReservaService reservaService;
+    ReservaServiceImpl reservaService;
 
     public ReservaDTO criaReservaDTO() throws JsonProcessingException {
         return new ReservaDTO(1L,clienteControllerTest.criaCliente(),restauranteControllerTest.criaRestaurante(),new Date().toString(),4,"11","12");

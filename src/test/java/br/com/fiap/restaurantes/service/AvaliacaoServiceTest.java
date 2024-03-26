@@ -4,7 +4,6 @@ package br.com.fiap.restaurantes.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -26,7 +25,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-class AvaliacaoServiceTest {
+public class AvaliacaoServiceTest {
+
   private AvaliacaoService avaliacaoService;
   @Mock
   private AvaliacaoRepository avaliacaoRepository;
@@ -42,6 +42,7 @@ class AvaliacaoServiceTest {
   void tearDown() throws Exception {
     openMocks.close();
   }
+
 
   @Nested
   class RegistrarAvaliacao {
@@ -112,7 +113,7 @@ class AvaliacaoServiceTest {
 
     @Test
     void devePermirirAlterarAvaliacao() {
-      var id = new Random().nextLong();
+      var id = 1L;
       var avaliacaoAntiga = AvaliacaoHelper.gerarAvaliacao();
       avaliacaoAntiga.setId(id);
       var avaliacaoNova = avaliacaoAntiga;
@@ -161,64 +162,38 @@ class AvaliacaoServiceTest {
 
   }
 
-  @Nested
-  class RemoverAvaliacao {
-
     @Test
     void devePermitirApagarAvaliacao() {
-      var id = 1L;
-      var avaliacao = AvaliacaoHelper.gerarAvaliacao();
-      avaliacao.setId(id);
-      when(avaliacaoRepository.findById(id))
-          .thenReturn(Optional.of(avaliacao));
-      doNothing()
-          .when(avaliacaoRepository).deleteById(id);
+      var id = 2L;
+      avaliacaoService.delete(id);
 
-      var resultado = avaliacaoService.apagarAvaliacao(id);
-
-      assertThat(resultado).isTrue();
-      verify(avaliacaoRepository, times(1)).findById(any(Long.class));
-      verify(avaliacaoRepository, times(1)).delete(any(Avaliacao.class));
+      verify(avaliacaoRepository).deleteById(id);
     }
-
-  }
-
-  @Nested
-  class ListarAvaliacoes {
 
     @Test
     void devePermitirListarAvaliacoes() {
-      Page<Avaliacao> page = new PageImpl<>(Arrays.asList(
-          AvaliacaoHelper.gerarAvaliacao(),
-          AvaliacaoHelper.gerarAvaliacao()
-      ));
+      Collection<Avaliacao> listaAvaliacoes = new ArrayList<>();
+      var avaliacao1 = AvaliacaoHelper.gerarAvaliacao();
+      var avaliacao2 = AvaliacaoHelper.gerarAvaliacaoCompleta();
+      listaAvaliacoes.add(avaliacao1);
+      listaAvaliacoes.add(avaliacao2);
 
-      when(avaliacaoRepository.listarAvaliacoes(any(Pageable.class)))
-          .thenReturn(page);
-
-      Page<Avaliacao> avaliacoes = avaliacaoService.listarAvaliacoes(Pageable.unpaged());
+      when(avaliacaoRepository.listarAvaliacoes()).thenReturn(listaAvaliacoes);
+      Collection<Avaliacao> avaliacoes = avaliacaoService.findAll();
 
       assertThat(avaliacoes).hasSize(2);
-      assertThat(avaliacoes.getContent())
-          .asList()
-          .allSatisfy(avaliacao -> {
-            assertThat(avaliacao).isNotNull();
-            assertThat(avaliacao).isInstanceOf(Avaliacao.class);
-          });
-      verify(avaliacaoRepository, times(1)).listarAvaliacoes(any(Pageable.class));
     }
 
-    @Test
-    void devePermitirListarAvaliacoes_QuandoNaoExisteRegistro() {
-      Page<Avaliacao> page = new PageImpl<>(Collections.emptyList());
+  @Test
+  void devePermitirListarAvaliacoes_QuandoNaoExisteRegistro() {
+    Collection<Avaliacao> page = new ArrayList<>();
 
-      when(avaliacaoRepository.listarAvaliacoes(any(Pageable.class)))
-          .thenReturn(page);
+    when(avaliacaoRepository.listarAvaliacoes())
+            .thenReturn(page);
 
-      Page<Avaliacao> avaliacoes = avaliacaoService.listarAvaliacoes(Pageable.unpaged());
+    Collection<Avaliacao> avaliacoes = avaliacaoService.findAll();
 
-      assertThat(avaliacoes).isEmpty();
-      verify(avaliacaoRepository, times(1)).listarAvaliacoes(any(Pageable.class));
-    }
+    assertThat(avaliacoes).isEmpty();
+    verify(avaliacaoRepository, times(1)).listarAvaliacoes();
   }
 }

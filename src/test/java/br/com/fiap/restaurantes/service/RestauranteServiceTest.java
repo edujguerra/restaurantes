@@ -1,23 +1,33 @@
 package br.com.fiap.restaurantes.service;
 
 import br.com.fiap.restaurantes.dto.RestauranteDTO;
+import br.com.fiap.restaurantes.entities.Avaliacao;
 import br.com.fiap.restaurantes.entities.Restaurante;
 import br.com.fiap.restaurantes.entities.TipoCozinha;
 import br.com.fiap.restaurantes.repository.RestauranteRepository;
+import br.com.fiap.restaurantes.utils.AvaliacaoHelper;
 import br.com.fiap.restaurantes.utils.ReservaHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Random;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureMockMvc
 public class RestauranteServiceTest {
 
     private RestauranteServiceImpl restauranteService;

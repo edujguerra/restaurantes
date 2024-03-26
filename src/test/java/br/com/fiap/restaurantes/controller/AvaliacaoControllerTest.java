@@ -1,16 +1,13 @@
 package br.com.fiap.restaurantes.controller;
 
-import br.com.fiap.restaurantes.service.ClienteServiceImpl;
+import br.com.fiap.restaurantes.dto.AvaliacaoDTO;
+import br.com.fiap.restaurantes.dto.ClienteDTO;
+import br.com.fiap.restaurantes.dto.RestauranteDTO;
+import br.com.fiap.restaurantes.entities.TipoCozinha;
+import br.com.fiap.restaurantes.service.AvaliacaoServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import br.com.fiap.restaurantes.dto.ClienteDTO;
-import br.com.fiap.restaurantes.entities.Cliente;
-
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -22,63 +19,75 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDate;
+
+import static org.mockito.Mockito.*;
+
 @SpringBootTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @AutoConfigureMockMvc
-public class ClienteControllerTest {
-    
+@NoArgsConstructor
+public class AvaliacaoControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
-
+    
     ObjectMapper objectMapper = new ObjectMapper();
 
     @MockBean
-    private ClienteServiceImpl clienteService;
-
-    public String criaClienteDTO() throws JsonProcessingException {
-        return objectMapper.writeValueAsString(new ClienteDTO(1L,"CLIENTE UM","EMAIL UM",213213l));
-    }    
+    private AvaliacaoServiceImpl avaliacaoService;
 
     @Test
     public void findAll() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/clientes"))
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/avaliacoes"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void save() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/clientes")
+        mockMvc.perform(MockMvcRequestBuilders.post("/avaliacoes")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(criaClienteDTO()))
+            .content(objectMapper.writeValueAsString(criaAvaliacao())))
             .andExpect(MockMvcResultMatchers.status().isCreated()); 
     }
 
     @Test
     public void findById() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/clientes/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/avaliacoes/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void update() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/clientes/1")
+        mockMvc.perform(MockMvcRequestBuilders.put("/avaliacoes/1")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(criaClienteDTO()))
+            .content(objectMapper.writeValueAsString(criaAvaliacao())))
             .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void delete() throws Exception {
-        doNothing().when(clienteService).delete(1L);
-        mockMvc.perform(MockMvcRequestBuilders.delete("/clientes/1"))
+        doNothing().when(avaliacaoService).delete(1L);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/avaliacoes/1"))
                 .andExpect(MockMvcResultMatchers.status().is(204));
 
-                 verify(clienteService, times(1)).delete(1l);
+            verify(avaliacaoService, times(1)).delete(1l);
     }
 
-    public Cliente criaCliente(){
-            return new Cliente(1L,"CLIENTE UM","EMAIL UM",213213l);
-        }
+    public AvaliacaoDTO criaAvaliacao() throws JsonProcessingException {
+        TipoCozinha tipoCozinha = new TipoCozinha(1L, "Teste");
+        ClienteDTO clienteDTO = new ClienteDTO(1L, "Teste", "email",1234L );
+        RestauranteDTO restauranteDTO = new RestauranteDTO(1L, "nome teste",
+                "endereço",  tipoCozinha, "01:00", "06:00",
+                10,10);
+
+        LocalDate dateFormated = LocalDate.parse("2019-12-31");
+
+        AvaliacaoDTO avaliacaoDTO = new AvaliacaoDTO(1L, clienteDTO,
+                restauranteDTO, "Avaliação Boa", 7, dateFormated);
+
+        return avaliacaoDTO;
     }
     
+}
